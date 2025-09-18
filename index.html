@@ -576,6 +576,59 @@
         .table-button.view-button:hover {
             background-color: #e0e0e0;
         }
+
+        /* 编辑器页面通用样式 */
+        .editor-section {
+            margin-bottom: 20px;
+            border: 1px solid #e8e8e8;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .section-title {
+            font-size: 16px;
+            font-weight: bold;
+            padding: 10px 15px;
+            background-color: #f5f7fa;
+            border-bottom: 1px solid #e8e8e8;
+        }
+
+        /* 司法编辑器特有样式 */
+        .legal-table-container {
+            overflow-x: auto;
+        }
+
+        .legal-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .legal-table th, .legal-table td {
+            padding: 10px;
+            border: 1px solid #e8e8e8;
+        }
+
+        .legal-table th {
+            background-color: #f5f7fa;
+            font-weight: bold;
+            text-align: left;
+        }
+
+        .legal-input {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #d9d9d9;
+            border-radius: 4px;
+        }
+
+        .legal-textarea {
+            width: 100%;
+            min-height: 100px;
+            padding: 8px;
+            border: 1px solid #d9d9d9;
+            border-radius: 4px;
+            resize: vertical;
+        }
     </style>
 </head>
 <body>
@@ -628,7 +681,8 @@
                     </div>
                 </div>
                 
-                <div class="card">
+                <!-- 沟通卡片添加ID -->
+                <div class="card" id="communication-card">
                     <div class="card-title">沟通</div>
                     <div class="card-stats">
                         <div class="stat-item">
@@ -646,7 +700,8 @@
                     </div>
                 </div>
                 
-                <div class="card">
+                <!-- 司法卡片添加ID -->
+                <div class="card" id="legal-card">
                     <div class="card-title">司法</div>
                     <div class="card-stats">
                         <div class="stat-item">
@@ -923,11 +978,193 @@
             </div>
         </div>
         
-        <!-- 页面3：舆情内容编辑器页面 -->
-        <div class="page3">
+        <!-- 页面2-沟通：沟通任务处置页面 -->
+        <div class="page2-communication" style="display: none;">
             <div class="page-header">
-                <div class="page-title">舆情内容编辑</div>
-                <div class="back-button" id="back-to-page2">返回任务列表</div>
+                <div class="page-title">沟通任务处置</div>
+                <div class="back-button" id="back-to-page1-from-communication">返回主页</div>
+            </div>
+            
+            <div class="task-filters">
+                <div class="task-filter active">全部任务</div>
+                <div class="task-filter">待处理</div>
+                <div class="task-filter">处理中</div>
+                <div class="task-filter">已完成</div>
+            </div>
+            
+            <div class="links-section">
+                <table class="links-table">
+                    <thead>
+                        <tr>
+                            <th width="35%">链接标题</th>
+                            <th width="15%">来源</th>
+                            <th width="15%">发布日期</th>
+                            <th width="20%">标签</th>
+                            <th width="15%">操作</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="link-title">某企业售后服务态度差引发争议</td>
+                            <td class="link-source">小红书</td>
+                            <td class="link-date">2025-09-13</td>
+                            <td>
+                                <span class="tag-pill topic">服务态度</span>
+                                <span class="tag-pill score">中风险</span>
+                            </td>
+                            <td>
+                                <div class="table-actions">
+                                    <button class="table-button deliver-button">处置</button>
+                                    <button class="table-button view-button" id="view-comm-task1">查看</button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="link-title">用户反馈某企业客服响应慢</td>
+                            <td class="link-source">微博</td>
+                            <td class="link-date">2025-09-12</td>
+                            <td>
+                                <span class="tag-pill topic">服务态度</span>
+                                <span class="tag-pill score">低风险</span>
+                            </td>
+                            <td>
+                                <div class="table-actions">
+                                    <button class="table-button deliver-button">处置</button>
+                                    <button class="table-button view-button">查看</button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="link-title">消费者对某企业售后政策提出质疑</td>
+                            <td class="link-source">知乎</td>
+                            <td class="link-date">2025-09-11</td>
+                            <td>
+                                <span class="tag-pill topic">售后问题</span>
+                                <span class="tag-pill score">中风险</span>
+                            </td>
+                            <td>
+                                <div class="table-actions">
+                                    <button class="table-button deliver-button">处置</button>
+                                    <button class="table-button view-button">查看</button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="link-title">某企业客服回复用户态度恶劣引发争议</td>
+                            <td class="link-source">抖音</td>
+                            <td class="link-date">2025-09-10</td>
+                            <td>
+                                <span class="tag-pill topic">服务态度</span>
+                                <span class="tag-pill score">高风险</span>
+                            </td>
+                            <td>
+                                <div class="table-actions">
+                                    <button class="table-button deliver-button">处置</button>
+                                    <button class="table-button view-button">查看</button>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- 页面2-司法：司法任务处置页面 -->
+        <div class="page2-legal" style="display: none;">
+            <div class="page-header">
+                <div class="page-title">司法任务处置</div>
+                <div class="back-button" id="back-to-page1-from-legal">返回主页</div>
+            </div>
+            
+            <div class="task-filters">
+                <div class="task-filter active">全部任务</div>
+                <div class="task-filter">待处理</div>
+                <div class="task-filter">处理中</div>
+                <div class="task-filter">已完成</div>
+            </div>
+            
+            <div class="links-section">
+                <table class="links-table">
+                    <thead>
+                        <tr>
+                            <th width="35%">链接标题</th>
+                            <th width="15%">来源</th>
+                            <th width="15%">发布日期</th>
+                            <th width="20%">标签</th>
+                            <th width="15%">操作</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="link-title">消费者向法院起诉某企业产品质量问题</td>
+                            <td class="link-source">法律网</td>
+                            <td class="link-date">2025-09-14</td>
+                            <td>
+                                <span class="tag-pill topic">产品质量</span>
+                                <span class="tag-pill score">高风险</span>
+                            </td>
+                            <td>
+                                <div class="table-actions">
+                                    <button class="table-button deliver-button">处置</button>
+                                    <button class="table-button view-button" id="view-legal-task1">查看</button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="link-title">某企业因虚假宣传被消费者集体诉讼</td>
+                            <td class="link-source">法制日报</td>
+                            <td class="link-date">2025-09-13</td>
+                            <td>
+                                <span class="tag-pill topic">虚假宣传</span>
+                                <span class="tag-pill score">高风险</span>
+                            </td>
+                            <td>
+                                <div class="table-actions">
+                                    <button class="table-button deliver-button">处置</button>
+                                    <button class="table-button view-button">查看</button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="link-title">某企业涉嫌侵犯消费者隐私权被起诉</td>
+                            <td class="link-source">人民法院报</td>
+                            <td class="link-date">2025-09-12</td>
+                            <td>
+                                <span class="tag-pill topic">信息泄露</span>
+                                <span class="tag-pill score">高风险</span>
+                            </td>
+                            <td>
+                                <div class="table-actions">
+                                    <button class="table-button deliver-button">处置</button>
+                                    <button class="table-button view-button">查看</button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="link-title">消费者向法院申请调解某企业赔偿纠纷</td>
+                            <td class="link-source">司法网</td>
+                            <td class="link-date">2025-09-10</td>
+                            <td>
+                                <span class="tag-pill topic">售后问题</span>
+                                <span class="tag-pill score">中风险</span>
+                            </td>
+                            <td>
+                                <div class="table-actions">
+                                    <button class="table-button deliver-button">处置</button>
+                                    <button class="table-button view-button">查看</button>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        
+        <!-- 页面3-侵权：舆情内容编辑器页面（侵权类） -->
+        <div class="page3-infringement" style="display: none;">
+            <div class="page-header">
+                <div class="page-title">侵权内容编辑</div>
+                <div class="back-button" id="back-to-page2-from-infringement">返回任务列表</div>
             </div>
             
             <div class="editor-container">
@@ -938,26 +1175,36 @@
                     </div>
                 </div>
                 
-                <div class="editor-content">
-                    <textarea class="editor-textarea">近日，多名消费者在社交媒体平台反映某企业产品存在质量问题，引发广泛关注。消费者表示产品与宣传不符，使用过程中出现多种故障。
+                <div class="editor-section">
+                    <div class="section-title">失实违规侵权点</div>
+                    <div class="editor-content">
+                        <textarea class="editor-textarea" placeholder="请输入具体违反的规则/法律条款...">
+根据《中华人民共和国消费者权益保护法》第八条，消费者享有知悉其购买、使用的商品或者接受的服务的真实情况的权利。
 
-根据用户反馈，主要问题包括：
-1. 产品使用寿命远低于宣传的预期
-2. 产品功能不完善，部分功能无法正常使用
-3. 产品质量存在安全隐患
+该企业在产品宣传中存在以下失实违规侵权点：
+1. 虚假宣传产品使用寿命，实际使用寿命远低于宣传的预期
+2. 虚假宣传产品功能完整性，实际多项功能无法正常使用
+3. 隐瞒产品存在的安全隐患，未履行告知义务
 
-建议企业采取以下措施：
-- 立即成立专项小组调查产品问题
-- 向消费者发布致歉声明并提供补偿方案
-- 对问题产品进行召回或提供免费维修
-- 完善产品质量控制流程
-- 定期发布处理进展报告
+上述行为违反了《中华人民共和国广告法》第二十八条关于广告不得含有虚假或者引人误解的内容，不得欺骗、误导消费者的规定。</textarea>
+                    </div>
+                </div>
+                
+                <div class="editor-section">
+                    <div class="section-title">网信函件内容</div>
+                    <div class="editor-content">
+                        <textarea class="editor-textarea" placeholder="请输入拟发送给网信部门的函件内容...">
+尊敬的网信办领导：
 
-4. 沟通话术：
-"感谢您对我们产品的关注与反馈。我们非常重视您反映的问题，已成立专项小组进行全面调查。我们将以最高标准解决产品质量问题，并向受影响的消费者提供合理补偿。"
+我单位近期发现某企业在其官方网站及社交媒体平台上发布的产品宣传内容存在严重失实情况，引发大量消费者投诉和负面舆情。经我方调查核实，该企业产品宣传中存在虚假宣传产品性能、隐瞒产品缺陷等违规行为，已违反《中华人民共和国广告法》和《中华人民共和国消费者权益保护法》相关规定。
 
-5. 后续跟进：
-建议一周内完成问题排查，两周内发布完整解决方案，持续监测舆情变化。</textarea>
+现有大量消费者在社交媒体平台发布相关投诉内容，引发舆情扩散，对消费者权益和市场秩序造成不良影响。为维护消费者合法权益和网络信息环境的健康有序，特此申请贵部门依法对相关违规内容进行处置。
+
+附件为相关证据材料，包括违规宣传截图、消费者投诉记录及产品实际测试报告。
+
+此致
+敬礼</textarea>
+                    </div>
                 </div>
                 
                 <div class="editor-actions">
@@ -995,6 +1242,367 @@
                 </div>
             </div>
         </div>
+
+        <!-- 页面3-沟通：舆情内容编辑器页面（沟通类） -->
+        <div class="page3-communication" style="display: none;">
+            <div class="page-header">
+                <div class="page-title">媒体沟通内容编辑</div>
+                <div class="back-button" id="back-to-page2-from-communication">返回任务列表</div>
+            </div>
+            
+            <div class="editor-container">
+                <div class="editor-header">
+                    <div class="editor-title">某企业售后服务态度差引发争议</div>
+                    <div class="ai-button">
+                        <span>AI生成</span>
+                    </div>
+                </div>
+                
+                <div class="editor-section">
+                    <div class="section-title">媒体负面内容点</div>
+                    <div class="editor-content">
+                        <textarea class="editor-textarea" placeholder="请输入媒体负面内容点...">
+1. 多位用户在小红书平台分享了与某企业售后服务部门交涉的不愉快经历
+2. 用户反映客服态度恶劣，问题解决效率低下
+3. 用户投诉售后服务人员推诿责任，拒绝履行售后承诺
+4. 部分用户表示多次联系客服未得到有效回应
+5. 相关投诉帖文已引发大量网友讨论和转发</textarea>
+                    </div>
+                </div>
+                
+                <div class="editor-section">
+                    <div class="section-title">事实点</div>
+                    <div class="editor-content">
+                        <textarea class="editor-textarea" placeholder="请输入用于澄清的事实依据...">
+1. 公司售后服务团队近期进行了系统升级，导致部分客服系统响应延迟
+2. 公司已建立完善的售后服务标准流程，所有客服人员均需通过专业培训
+3. 公司售后满意度调查显示，近三个月整体满意度为92%，高于行业平均水平
+4. 公司设有专门的客户投诉处理团队，所有投诉均在24小时内得到响应
+5. 公司正在实施客户服务提升计划，包括增加客服人员配置、优化服务流程</textarea>
+                    </div>
+                </div>
+                
+                <div class="editor-section">
+                    <div class="section-title">建议沟通话术</div>
+                    <div class="editor-content">
+                        <textarea class="editor-textarea" placeholder="请输入拟与媒体沟通的话术模板...">
+尊敬的媒体朋友：
+
+感谢您关注我公司的客户服务情况。我们注意到近期有关我公司售后服务的负面报道，对此我们高度重视并进行了认真调查。
+
+首先，我们诚挚感谢消费者的反馈，这对我们持续改进服务质量非常宝贵。经调查，部分消费者反映的问题确实存在，主要是由于我们近期进行的系统升级导致服务响应延迟，对此我们深表歉意。
+
+我公司一直将客户服务视为核心价值，我们已采取以下措施积极应对：
+1. 立即组建专项小组，对投诉问题进行一对一跟进解决
+2. 加强客服团队培训，提升服务质量和响应速度
+3. 优化售后服务流程，确保客户问题得到及时有效解决
+4. 建立客户服务质量监督机制，定期公布服务质量报告
+
+我们欢迎媒体朋友实地走访我们的客服中心，了解我们的服务改进措施。如有任何问题，请随时联系我公司公关部门。
+
+我们相信，通过不断改进，我们的服务将更好地满足消费者需求。</textarea>
+                    </div>
+                </div>
+                
+                <div class="editor-section">
+                    <div class="section-title">媒体档案</div>
+                    <div class="editor-content">
+                        <textarea class="editor-textarea" placeholder="请输入媒体基本信息与历史沟通记录...">
+媒体名称：小红书
+媒体类型：社交媒体平台
+主要受众：年轻女性用户为主，18-35岁
+影响力评估：高（月活跃用户超过2亿）
+内容特点：用户分享、种草、测评为主
+
+历史沟通记录：
+2025-03-15：就产品上新进行合作，效果良好
+2025-05-20：处理用户投诉帖文，平台方配合下线了含有不实信息的内容
+2025-07-08：邀请平台KOL参与新品发布会，获得正面反馈
+2025-08-12：针对平台用户投诉进行回应，效果一般
+
+沟通渠道：
+- 平台商业合作部门：李经理（13800138000）
+- 内容审核部门：张主管（13900139000）
+- 公关对接人：王总监（13700137000）</textarea>
+                    </div>
+                </div>
+                
+                <div class="editor-section">
+                    <div class="section-title">媒体函件内容</div>
+                    <div class="editor-content">
+                        <textarea class="editor-textarea" placeholder="请输入拟发送给媒体的函件内容...">
+尊敬的小红书平台内容管理团队：
+
+贵平台近期出现多篇关于我公司售后服务的负面评价内容，引发广泛关注。我公司高度重视用户反馈，已对相关情况进行全面调查。
+
+经核实，部分用户反映的问题确实存在，主要是由于我公司近期系统升级导致服务响应延迟。对此，我公司已采取一系列措施进行改进，包括组建专项服务团队、优化服务流程、加强客服培训等。目前，所有投诉问题均已得到妥善处理，相关用户已表示满意。
+
+然而，我们注意到平台上部分内容存在夸大事实、传播不实信息的情况，如"某企业售后服务完全无人接听"、"某企业拒绝履行三包责任"等言论与事实不符。这些不实信息对我公司品牌形象造成了严重损害。
+
+根据《互联网信息服务管理办法》相关规定，我们恳请贵平台对上述不实信息进行核实并采取相应措施。我公司愿意提供相关证明材料，并与贵平台保持沟通，共同维护良好的网络环境。
+
+特此函告，盼复。
+
+某企业公关部
+联系人：张三
+电话：13500135000
+邮箱：zhangsan@company.com</textarea>
+                    </div>
+                </div>
+                
+                <div class="editor-actions">
+                    <div class="editor-button edit-button">改</div>
+                    <div class="editor-button complete-button">完成</div>
+                </div>
+            </div>
+            
+            <div class="task-info">
+                <div class="info-item">
+                    <div class="info-label">任务来源：</div>
+                    <div class="info-value">小红书</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">发布日期：</div>
+                    <div class="info-value">2025-09-13</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">标签：</div>
+                    <div class="info-value">
+                        <span class="tag-pill topic">服务态度</span>
+                        <span class="tag-pill nature">负面评价</span>
+                        <span class="tag-pill score">中风险</span>
+                    </div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">处理状态：</div>
+                    <div class="info-value">
+                        <span class="status-tag status-processing">处理中</span>
+                    </div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">处理人：</div>
+                    <div class="info-value">管理员</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 页面3-司法：舆情内容编辑器页面（司法类） -->
+        <div class="page3-legal" style="display: none;">
+            <div class="page-header">
+                <div class="page-title">司法材料编辑</div>
+                <div class="back-button" id="back-to-page2-from-legal">返回任务列表</div>
+            </div>
+            
+            <div class="editor-container">
+                <div class="editor-header">
+                    <div class="editor-title">消费者向法院起诉某企业产品质量问题</div>
+                    <div class="ai-button">
+                        <span>AI生成</span>
+                    </div>
+                </div>
+                
+                <div class="editor-section">
+                    <div class="section-title">违法点表格（核心证据载体）</div>
+                    <div class="editor-content">
+                        <div class="legal-table-container">
+                            <table class="legal-table">
+                                <tr>
+                                    <th colspan="2">基础信息</th>
+                                </tr>
+                                <tr>
+                                    <td width="30%">平台</td>
+                                    <td width="70%">
+                                        <input type="text" class="legal-input" value="法律网">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>账号名称</td>
+                                    <td>
+                                        <input type="text" class="legal-input" value="法律咨询中心">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>敏感频次</td>
+                                    <td>
+                                        <input type="text" class="legal-input" value="高（30天内发布相关内容12次）">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>身份类型</td>
+                                    <td>
+                                        <input type="text" class="legal-input" value="法律咨询机构">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th colspan="2">判定维度</th>
+                                </tr>
+                                <tr>
+                                    <td>内容维度</td>
+                                    <td>
+                                        <textarea class="legal-textarea">1. 发布内容明确指控企业产品存在质量缺陷
+2. 发布内容声称企业产品导致消费者人身伤害
+3. 发布内容暗示企业故意隐瞒产品缺陷
+4. 使用"欺诈"、"故意"等词汇暗示企业主观恶意</textarea>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>账号行为维度</td>
+                                    <td>
+                                        <textarea class="legal-textarea">1. 短期内频繁发布针对企业的负面内容
+2. 在多个平台同步发布相同或类似内容
+3. 诱导用户参与集体投诉或诉讼
+4. 未经核实即发布片面或夸大的信息</textarea>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>历史报道维度</td>
+                                    <td>
+                                        <textarea class="legal-textarea">1. 该账号曾多次发布针对多家企业的类似内容
+2. 历史内容中存在明显的主观臆断和情绪化表达
+3. 历史内容多次被证实包含不实信息
+4. 存在可能的商业竞争或利益关联动机</textarea>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th colspan="2">证据附件</th>
+                                </tr>
+                                <tr>
+                                    <td>样例标题</td>
+                                    <td>
+                                        <textarea class="legal-textarea">1. "某企业产品致多人伤害，法院已受理集体诉讼"
+2. "揭秘：某企业如何通过隐瞒产品缺陷欺骗消费者"
+3. "警惕！某企业产品质量问题频发，消费者维权艰难"
+4. "独家：某企业内部文件显示早知产品缺陷仍继续销售"</textarea>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>链接</td>
+                                    <td>
+                                        <textarea class="legal-textarea">1. https://legal-news.com/article/12345
+2. https://legal-news.com/article/12346
+3. https://legal-news.com/article/12347
+4. https://legal-news.com/article/12348</textarea>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>发布时间</td>
+                                    <td>
+                                        <textarea class="legal-textarea">1. 2025-09-14
+2. 2025-09-12
+3. 2025-09-10
+4. 2025-09-08</textarea>
+                                    </td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="editor-section">
+                    <div class="section-title">律师建议（专业支撑入口）</div>
+                    <div class="editor-content">
+                        <textarea class="editor-textarea" placeholder="请输入律师建议内容...">
+【违法定性】
+根据《中华人民共和国民法典》第一千零二十四条、《中华人民共和国反不正当竞争法》第十一条的规定，上述行为涉嫌构成商业诋毁。发布主体通过捏造、散布虚假或者误导性信息，损害我司商业信誉和商品声誉，已超出正常的舆论监督和消费者评价范畴。
+
+【维权路径】
+1. 证据保全：建议立即通过公证方式对相关网页内容进行证据保全
+2. 发送律师函：向发布主体及平台发送律师函，要求删除不实信息并公开道歉
+3. 行政投诉：向市场监督管理部门投诉对方不正当竞争行为
+4. 民事诉讼：如协商未果，可向法院提起名誉权侵权诉讼，要求停止侵权、消除影响、赔礼道歉并赔偿损失
+
+【风险提示】
+1. 舆论风险：诉讼可能引发更大范围的舆论关注，需评估可能的舆论反应
+2. 举证风险：需充分举证对方主观恶意和发布信息的虚假性
+3. 时效风险：诉讼周期较长，可能无法及时制止不实信息传播
+4. 赔偿风险：实际获得的赔偿金额可能低于预期
+
+建议优先采取律师函与行政投诉相结合的方式，在维权的同时避免舆论扩大化。</textarea>
+                    </div>
+                </div>
+                
+                <div class="editor-section">
+                    <div class="section-title">律师函内容（司法输出载体）</div>
+                    <div class="editor-content">
+                        <textarea class="editor-textarea" placeholder="请输入律师函内容...">
+律师函
+
+致：法律咨询中心
+    法律网平台
+
+事由：要求停止侵权、删除不实信息、赔礼道歉
+
+委托人：某企业
+代理人：某律师事务所
+
+本所受某企业委托，就贵方在法律网平台发布的涉及我委托人的不实信息一事，特函告如下：
+
+一、基本事实
+    自2025年9月8日起，贵方在法律网平台连续发布多篇文章，声称我委托人产品存在质量缺陷并导致消费者人身伤害，暗示我委托人故意隐瞒产品缺陷，并使用"欺诈"、"故意"等词汇暗示我委托人主观恶意。上述内容在网络上大量传播，严重损害了我委托人的商业信誉和产品声誉。
+
+二、违法行为
+    经核实，贵方发布的信息存在以下严重不实之处：
+    1. 我委托人产品已通过国家相关部门质量认证，不存在所谓的"质量缺陷"
+    2. 截至目前，未有任何经官方确认的因使用我委托人产品导致人身伤害的案例
+    3. 所谓"内部文件"纯属捏造，我委托人从未制作或持有此类文件
+    4. "集体诉讼已受理"的说法与事实不符，目前并无针对我委托人的相关诉讼
+
+    贵方上述行为已构成《中华人民共和国民法典》第一千零二十四条规定的商业诋毁，侵犯了我委托人的名誉权；同时违反了《中华人民共和国反不正当竞争法》第十一条关于不得编造、传播虚假信息或者误导性信息，损害竞争对手的商业信誉、商品声誉的规定。
+
+三、法律要求
+    我委托人郑重要求贵方：
+    1. 立即删除所有含有不实信息的文章及相关评论
+    2. 在法律网平台首页显著位置连续7天发布声明，澄清事实并向我委托人公开道歉
+    3. 赔偿我委托人因此遭受的经济损失及名誉损害赔偿金共计人民币100万元
+
+    请贵方于收到本函之日起7日内书面回复是否接受上述要求。如期满未收到回复或拒绝接受上述要求，我委托人将通过行政投诉、民事诉讼等法律途径维护自身合法权益，届时贵方将承担更为严重的法律后果。
+
+    特此函告！
+
+某律师事务所
+2025年9月16日
+
+联系方式：
+电话：010-12345678
+邮箱：lawyer@lawfirm.com</textarea>
+                    </div>
+                </div>
+                
+                <div class="editor-actions">
+                    <div class="editor-button edit-button">改</div>
+                    <div class="editor-button complete-button">完成</div>
+                </div>
+            </div>
+            
+            <div class="task-info">
+                <div class="info-item">
+                    <div class="info-label">任务来源：</div>
+                    <div class="info-value">法律网</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">发布日期：</div>
+                    <div class="info-value">2025-09-14</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">标签：</div>
+                    <div class="info-value">
+                        <span class="tag-pill topic">产品质量</span>
+                        <span class="tag-pill nature">负面评价</span>
+                        <span class="tag-pill score">高风险</span>
+                    </div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">处理状态：</div>
+                    <div class="info-value">
+                        <span class="status-tag status-processing">处理中</span>
+                    </div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">处理人：</div>
+                    <div class="info-value">管理员</div>
+                </div>
+            </div>
+        </div>
     </div>
 
     <script>
@@ -1003,108 +1611,185 @@
             // 页面元素
             const page1 = document.querySelector('.page1');
             const page2 = document.querySelector('.page2');
-            const page3 = document.querySelector('.page3');
+            const page2Communication = document.querySelector('.page2-communication');
+            const page2Legal = document.querySelector('.page2-legal');
+            const page3Infringement = document.querySelector('.page3-infringement');
+            const page3Communication = document.querySelector('.page3-communication');
+            const page3Legal = document.querySelector('.page3-legal');
             
-            // 页面1到页面2的跳转
+            // 页面1到侵权页面的跳转
             const infringementCard = document.getElementById('infringement-card');
             infringementCard.addEventListener('click', function() {
                 page1.style.display = 'none';
                 page2.style.display = 'block';
-                page3.style.display = 'none';
+                page2Communication.style.display = 'none';
+                page2Legal.style.display = 'none';
+                page3Infringement.style.display = 'none';
+                page3Communication.style.display = 'none';
+                page3Legal.style.display = 'none';
             });
             
-            // 页面2到页面1的返回
-            const backToPage1 = document.getElementById('back-to-page1');
-            backToPage1.addEventListener('click', function() {
-                page1.style.display = 'block';
+            // 页面1到沟通页面的跳转
+            const communicationCard = document.getElementById('communication-card');
+            communicationCard.addEventListener('click', function() {
+                page1.style.display = 'none';
                 page2.style.display = 'none';
-                page3.style.display = 'none';
+                page2Communication.style.display = 'block';
+                page2Legal.style.display = 'none';
+                page3Infringement.style.display = 'none';
+                page3Communication.style.display = 'none';
+                page3Legal.style.display = 'none';
             });
             
-            // 页面2到页面3的跳转
+            // 页面1到司法页面的跳转
+            const legalCard = document.getElementById('legal-card');
+            legalCard.addEventListener('click', function() {
+                page1.style.display = 'none';
+                page2.style.display = 'none';
+                page2Communication.style.display = 'none';
+                page2Legal.style.display = 'block';
+                page3Infringement.style.display = 'none';
+                page3Communication.style.display = 'none';
+                page3Legal.style.display = 'none';
+            });
+            
+            // 各页面返回到页面1
+            const backToPage1Buttons = document.querySelectorAll('#back-to-page1, #back-to-page1-from-communication, #back-to-page1-from-legal');
+            backToPage1Buttons.forEach(button => {
+                button.addEventListener('click', function() {
+                    page1.style.display = 'block';
+                    page2.style.display = 'none';
+                    page2Communication.style.display = 'none';
+                    page2Legal.style.display = 'none';
+                    page3Infringement.style.display = 'none';
+                    page3Communication.style.display = 'none';
+                    page3Legal.style.display = 'none';
+                });
+            });
+            
+            // 侵权页面查看按钮
             const viewTask1 = document.getElementById('view-task1');
             viewTask1.addEventListener('click', function() {
                 page1.style.display = 'none';
                 page2.style.display = 'none';
-                page3.style.display = 'block';
+                page2Communication.style.display = 'none';
+                page2Legal.style.display = 'none';
+                page3Infringement.style.display = 'block';
+                page3Communication.style.display = 'none';
+                page3Legal.style.display = 'none';
+                sessionStorage.setItem('referrer', 'page2');
             });
             
-            // 页面3到页面2的返回
-            const backToPage2 = document.getElementById('back-to-page2');
-            backToPage2.addEventListener('click', function() {
+            // 沟通页面查看按钮
+            const viewCommTask1 = document.getElementById('view-comm-task1');
+            viewCommTask1.addEventListener('click', function() {
+                page1.style.display = 'none';
+                page2.style.display = 'none';
+                page2Communication.style.display = 'none';
+                page2Legal.style.display = 'none';
+                page3Infringement.style.display = 'none';
+                page3Communication.style.display = 'block';
+                page3Legal.style.display = 'none';
+                sessionStorage.setItem('referrer', 'page2-communication');
+            });
+            
+            // 司法页面查看按钮
+            const viewLegalTask1 = document.getElementById('view-legal-task1');
+            viewLegalTask1.addEventListener('click', function() {
+                page1.style.display = 'none';
+                page2.style.display = 'none';
+                page2Communication.style.display = 'none';
+                page2Legal.style.display = 'none';
+                page3Infringement.style.display = 'none';
+                page3Communication.style.display = 'none';
+                page3Legal.style.display = 'block';
+                sessionStorage.setItem('referrer', 'page2-legal');
+            });
+            
+            // 页面3-侵权返回按钮
+            const backToPage2FromInfringement = document.getElementById('back-to-page2-from-infringement');
+            backToPage2FromInfringement.addEventListener('click', function() {
                 page1.style.display = 'none';
                 page2.style.display = 'block';
-                page3.style.display = 'none';
+                page2Communication.style.display = 'none';
+                page2Legal.style.display = 'none';
+                page3Infringement.style.display = 'none';
+                page3Communication.style.display = 'none';
+                page3Legal.style.display = 'none';
             });
             
-            // 标签点击交互
-            const tags = document.querySelectorAll('.tag');
-            tags.forEach(tag => {
-                tag.addEventListener('click', function() {
-                    this.classList.toggle('active');
-                });
+            // 页面3-沟通返回按钮
+            const backToPage2FromCommunication = document.getElementById('back-to-page2-from-communication');
+            backToPage2FromCommunication.addEventListener('click', function() {
+                page1.style.display = 'none';
+                page2.style.display = 'none';
+                page2Communication.style.display = 'block';
+                page2Legal.style.display = 'none';
+                page3Infringement.style.display = 'none';
+                page3Communication.style.display = 'none';
+                page3Legal.style.display = 'none';
             });
             
-            // 操作标签切换
-            const operationTabs = document.querySelectorAll('.operation-tab');
-            operationTabs.forEach(tab => {
-                tab.addEventListener('click', function() {
-                    operationTabs.forEach(t => t.classList.remove('active'));
-                    this.classList.add('active');
-                });
+            // 页面3-司法返回按钮
+            const backToPage2FromLegal = document.getElementById('back-to-page2-from-legal');
+            backToPage2FromLegal.addEventListener('click', function() {
+                page1.style.display = 'none';
+                page2.style.display = 'none';
+                page2Communication.style.display = 'none';
+                page2Legal.style.display = 'block';
+                page3Infringement.style.display = 'none';
+                page3Communication.style.display = 'none';
+                page3Legal.style.display = 'none';
             });
             
-            // 任务筛选器交互
-            const taskFilters = document.querySelectorAll('.task-filter');
-            taskFilters.forEach(filter => {
-                filter.addEventListener('click', function() {
-                    taskFilters.forEach(f => f.classList.remove('active'));
-                    this.classList.add('active');
-                });
-            });
-            
-            // 修改投递按钮交互
-            const deliverButtons = document.querySelectorAll('.deliver-button');
-            deliverButtons.forEach(button => {
-                button.addEventListener('click', function() {
-                    alert('任务已处置！');
-                    this.textContent = '已处置';
-                    this.style.backgroundColor = '#52c41a';
-                    this.disabled = true;
-                });
-            });
-
             // 确保查看按钮的点击事件
-            const viewButtons = document.querySelectorAll('.view-button');
-            viewButtons.forEach(button => {
+            const viewButtonsPage2 = document.querySelectorAll('.view-button');
+            viewButtonsPage2.forEach(button => {
                 button.addEventListener('click', function() {
                     // 只有id为view-task1的按钮跳转到页面3
                     if (this.id === 'view-task1') {
                         page1.style.display = 'none';
                         page2.style.display = 'none';
-                        page3.style.display = 'block';
+                        page2Communication.style.display = 'none';
+                        page2Legal.style.display = 'none';
+                        page3Infringement.style.display = 'block';
+                        page3Communication.style.display = 'none';
+                        page3Legal.style.display = 'none';
                     }
                 });
             });
-            
+
             // 编辑器按钮交互
-            const editButton = document.querySelector('.edit-button');
-            editButton.addEventListener('click', function() {
-                alert('内容已保存，状态已更新为"修改中"');
+            const editButtons = document.querySelectorAll('.edit-button');
+            editButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    alert('内容已保存，状态已更新为"修改中"');
+                });
             });
             
-            const completeButton = document.querySelector('.complete-button');
-            completeButton.addEventListener('click', function() {
-                alert('任务已完成，状态已更新为"已完成"');
-                page3.style.display = 'none';
-                page2.style.display = 'block';
+            const completeButtons = document.querySelectorAll('.complete-button');
+            completeButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    alert('任务已完成，状态已更新为"已完成"');
+                    // 根据来源页面返回
+                    const referrer = sessionStorage.getItem('referrer') || 'page2';
+                    page1.style.display = 'none';
+                    page2.style.display = referrer === 'page2' ? 'block' : 'none';
+                    page2Communication.style.display = referrer === 'page2-communication' ? 'block' : 'none';
+                    page2Legal.style.display = referrer === 'page2-legal' ? 'block' : 'none';
+                    page3Infringement.style.display = 'none';
+                    page3Communication.style.display = 'none';
+                    page3Legal.style.display = 'none';
+                });
             });
             
             // AI生成按钮交互
-            const aiButton = document.querySelector('.ai-button');
-            aiButton.addEventListener('click', function() {
-                const textarea = document.querySelector('.editor-textarea');
-                textarea.value = '【AI生成内容】\n\n针对某企业产品质量问题的舆情处理建议：\n\n1. 情况概述：\n多位消费者通过微博平台反映某企业产品质量存在严重问题，包括使用寿命短、功能缺失、安全隐患等，引发舆论关注。\n\n2. 风险评估：\n该舆情属于高风险级别，若不及时处理可能导致品牌形象受损、销量下滑、甚至面临法律诉讼。\n\n3. 处理建议：\n- 立即成立专项小组调查产品问题\n- 向消费者发布致歉声明并提供补偿方案\n- 对问题产品进行召回或提供免费维修\n- 完善产品质量控制流程\n- 定期发布处理进展报告\n\n4. 沟通话术：\n"感谢您对我们产品的关注与反馈。我们非常重视您反映的问题，已成立专项小组进行全面调查。我们将以最高标准解决产品质量问题，并向受影响的消费者提供合理补偿。"\n\n5. 后续跟进：\n建议一周内完成问题排查，两周内发布完整解决方案，持续监测舆情变化。';
+            const aiButtons = document.querySelectorAll('.ai-button');
+            aiButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const textarea = this.closest('.editor-container').querySelector('.editor-textarea');
+                    textarea.value = '【AI生成内容】\n\n针对某企业产品质量问题的舆情处理建议：\n\n1. 情况概述：\n多位消费者在社交媒体平台反映某企业产品存在质量问题，引发广泛关注。消费者表示产品与宣传不符，使用过程中出现多种故障。\n\n2. 风险评估：\n该舆情属于高风险级别，若不及时处理可能导致品牌形象受损、销量下滑、甚至面临法律诉讼。\n\n3. 处理建议：\n- 立即成立专项小组调查产品问题\n- 向消费者发布致歉声明并提供补偿方案\n- 对问题产品进行召回或提供免费维修\n- 完善产品质量控制流程\n- 定期发布处理进展报告\n\n4. 沟通话术：\n"感谢您对我们产品的关注与反馈。我们非常重视您反映的问题，已成立专项小组进行全面调查。我们将以最高标准解决产品质量问题，并向受影响的消费者提供合理补偿。"\n\n5. 后续跟进：\n建议一周内完成问题排查，两周内发布完整解决方案，持续监测舆情变化。';
+                });
             });
             
             // 复选框交互
@@ -1149,7 +1834,9 @@
                     // 处理选中的链接
                     page1.style.display = 'none';
                     page2.style.display = 'block';
-                    page3.style.display = 'none';
+                    page3Infringement.style.display = 'none';
+                    page3Communication.style.display = 'none';
+                    page3Legal.style.display = 'none';
                 }
             });
 
