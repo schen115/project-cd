@@ -1,0 +1,1164 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>舆情链接批量处理平台</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "PingFang SC", "Microsoft YaHei", sans-serif;
+        }
+        
+        body {
+            background-color: #f5f7fa;
+            color: #333;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+            border-bottom: 1px solid #e8e8e8;
+            margin-bottom: 20px;
+        }
+        
+        .logo {
+            font-size: 20px;
+            font-weight: bold;
+            color: #1890ff;
+        }
+        
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .user-avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background-color: #1890ff;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+        
+        /* 页面1样式 */
+        .page1 {
+            display: block;
+        }
+        
+        .page2, .page3 {
+            display: none;
+        }
+        
+        .card-container {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .card {
+            flex: 1;
+            background-color: white;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .card-title {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            color: #333;
+        }
+        
+        .card-stats {
+            display: flex;
+            justify-content: space-between;
+        }
+        
+        .stat-item {
+            text-align: center;
+        }
+        
+        .stat-value {
+            font-size: 24px;
+            font-weight: bold;
+            color: #1890ff;
+        }
+        
+        .stat-label {
+            font-size: 12px;
+            color: #999;
+        }
+        
+        .filter-section {
+            background-color: white;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 30px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+        
+        .filter-title {
+            font-size: 16px;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+        
+        .date-filter {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        
+        .date-input {
+            padding: 8px 12px;
+            border: 1px solid #d9d9d9;
+            border-radius: 4px;
+            flex: 1;
+        }
+        
+        .tag-groups {
+            margin-bottom: 20px;
+        }
+        
+        .tag-group {
+            margin-bottom: 15px;
+        }
+        
+        .tag-group-title {
+            font-size: 14px;
+            margin-bottom: 10px;
+            color: #666;
+        }
+        
+        .tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        
+        .tag {
+            padding: 6px 12px;
+            background-color: #f0f0f0;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.2s;
+        }
+        
+        .tag.active {
+            background-color: #1890ff;
+            color: white;
+        }
+        
+        .links-section {
+            background-color: white;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+        
+        .links-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+        
+        .checkbox-group {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .checkbox-label {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 14px;
+        }
+        
+        .operation-tabs {
+            display: flex;
+            gap: 15px;
+        }
+        
+        .operation-tab {
+            padding: 6px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            background-color: #f0f0f0;
+            transition: all 0.2s;
+        }
+        
+        .operation-tab.active {
+            background-color: #1890ff;
+            color: white;
+        }
+        
+        .links-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        .links-table th, .links-table td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #e8e8e8;
+        }
+        
+        .links-table th {
+            font-weight: bold;
+            background-color: #fafafa;
+        }
+        
+        .links-table tr:hover {
+            background-color: #f5f5f5;
+        }
+        
+        .link-title {
+            color: #1890ff;
+            cursor: pointer;
+        }
+        
+        .link-source {
+            color: #999;
+            font-size: 12px;
+        }
+        
+        .link-date {
+            color: #999;
+            font-size: 12px;
+        }
+        
+        .tag-pill {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 10px;
+            font-size: 12px;
+            margin-right: 5px;
+        }
+        
+        .tag-pill.topic {
+            background-color: #e6f7ff;
+            color: #1890ff;
+        }
+        
+        .tag-pill.nature {
+            background-color: #f6ffed;
+            color: #52c41a;
+        }
+        
+        .tag-pill.score {
+            background-color: #fff2e8;
+            color: #fa8c16;
+        }
+        
+        /* 页面2样式 */
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .page-title {
+            font-size: 20px;
+            font-weight: bold;
+        }
+        
+        .back-button {
+            padding: 8px 16px;
+            background-color: #f0f0f0;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .back-button:hover {
+            background-color: #e0e0e0;
+        }
+        
+        .task-filters {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .task-filter {
+            padding: 8px 16px;
+            background-color: #f0f0f0;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .task-filter.active {
+            background-color: #1890ff;
+            color: white;
+        }
+        
+        /* 修改任务瀑布流样式 */
+        .task-waterfall {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .task-card {
+            background-color: white;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* 新增任务卡片布局样式 */
+        .task-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+
+        .task-info {
+            flex: 1;
+        }
+
+        .task-content {
+            margin-bottom: 15px;
+            font-size: 14px;
+            color: #666;
+            line-height: 1.5;
+        }
+
+        .task-meta {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 15px;
+            font-size: 12px;
+            color: #999;
+        }
+
+        .task-actions {
+            display: flex;
+            gap: 10px;
+            justify-content: flex-end;
+        }
+
+        .task-button {
+            padding: 8px 16px;
+            text-align: center;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .deliver-button {
+            background-color: #1890ff;
+            color: white;
+        }
+        
+        .deliver-button:hover {
+            background-color: #40a9ff;
+        }
+        
+        .view-button {
+            background-color: #f0f0f0;
+        }
+        
+        .view-button:hover {
+            background-color: #e0e0e0;
+        }
+        
+        /* 页面3样式 */
+        .editor-container {
+            background-color: white;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            margin-bottom: 20px;
+        }
+        
+        .editor-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .editor-title {
+            font-size: 18px;
+            font-weight: bold;
+        }
+        
+        .ai-button {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            padding: 8px 16px;
+            background-color: #722ed1;
+            color: white;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .ai-button:hover {
+            background-color: #9254de;
+        }
+        
+        .editor-content {
+            margin-bottom: 20px;
+        }
+        
+        .editor-textarea {
+            width: 100%;
+            min-height: 300px;
+            padding: 15px;
+            border: 1px solid #d9d9d9;
+            border-radius: 4px;
+            resize: vertical;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+        
+        .editor-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 15px;
+        }
+        
+        .editor-button {
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.2s;
+        }
+        
+        .edit-button {
+            background-color: #faad14;
+            color: white;
+        }
+        
+        .edit-button:hover {
+            background-color: #ffc53d;
+        }
+        
+        .complete-button {
+            background-color: #52c41a;
+            color: white;
+        }
+        
+        .complete-button:hover {
+            background-color: #73d13d;
+        }
+        
+        .task-info {
+            background-color: white;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+        
+        .info-item {
+            display: flex;
+            margin-bottom: 15px;
+        }
+        
+        .info-label {
+            width: 100px;
+            font-weight: bold;
+            color: #666;
+        }
+        
+        .info-value {
+            flex: 1;
+        }
+        
+        .status-tag {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 10px;
+            font-size: 12px;
+        }
+        
+        .status-pending {
+            background-color: #fff2e8;
+            color: #fa8c16;
+        }
+        
+        .status-processing {
+            background-color: #e6f7ff;
+            color: #1890ff;
+        }
+        
+        .status-completed {
+            background-color: #f6ffed;
+            color: #52c41a;
+        }
+
+        .operation-button {
+            padding: 8px 16px;
+            background-color: #1890ff;
+            color: white;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-size: 14px;
+        }
+
+        .operation-button:hover {
+            background-color: #40a9ff;
+        }
+
+        .link-checkbox {
+            width: 16px;
+            height: 16px;
+            cursor: pointer;
+        }
+
+        /* 表格操作按钮样式 */
+        .table-actions {
+            display: flex;
+            gap: 8px;
+        }
+
+        .table-button {
+            padding: 5px 10px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 12px;
+            transition: all 0.2s;
+        }
+
+        .table-button.deliver-button {
+            background-color: #1890ff;
+            color: white;
+        }
+
+        .table-button.deliver-button:hover {
+            background-color: #40a9ff;
+        }
+
+        .table-button.view-button {
+            background-color: #f0f0f0;
+            color: #333;
+        }
+
+        .table-button.view-button:hover {
+            background-color: #e0e0e0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">舆情链接批量处理平台</div>
+            <div class="user-info">
+                <span>管理员</span>
+                <div class="user-avatar">A</div>
+            </div>
+        </header>
+        
+        <!-- 页面1：舆情数据合作主页面 -->
+        <div class="page1">
+            <div class="card-container">
+                <!-- 修改舆情看板卡片，添加ID -->
+                <div class="card" id="dashboard-card">
+                    <div class="card-title">舆情看板</div>
+                    <div class="card-stats">
+                        <div class="stat-item">
+                            <div class="stat-value">1024</div>
+                            <div class="stat-label">总链接量</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value">768</div>
+                            <div class="stat-label">已处理</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value">256</div>
+                            <div class="stat-label">待处理</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card" id="infringement-card">
+                    <div class="card-title">侵权</div>
+                    <div class="card-stats">
+                        <div class="stat-item">
+                            <div class="stat-value">512</div>
+                            <div class="stat-label">总链接量</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value">384</div>
+                            <div class="stat-label">已处理</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value">128</div>
+                            <div class="stat-label">待处理</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-title">沟通</div>
+                    <div class="card-stats">
+                        <div class="stat-item">
+                            <div class="stat-value">256</div>
+                            <div class="stat-label">总链接量</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value">192</div>
+                            <div class="stat-label">已处理</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value">64</div>
+                            <div class="stat-label">待处理</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card">
+                    <div class="card-title">司法</div>
+                    <div class="card-stats">
+                        <div class="stat-item">
+                            <div class="stat-value">256</div>
+                            <div class="stat-label">总链接量</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value">192</div>
+                            <div class="stat-label">已处理</div>
+                        </div>
+                        <div class="stat-item">
+                            <div class="stat-value">64</div>
+                            <div class="stat-label">待处理</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="filter-section">
+                <div class="filter-title">筛选器</div>
+                <div class="date-filter">
+                    <input type="date" class="date-input" placeholder="开始日期">
+                    <span>至</span>
+                    <input type="date" class="date-input" placeholder="结束日期">
+                </div>
+                
+                <div class="tag-groups">
+                    <div class="tag-group">
+                        <div class="tag-group-title">话题</div>
+                        <div class="tags" id="topic-tags">
+                            <div class="tag">产品质量</div>
+                            <div class="tag">服务态度</div>
+                            <div class="tag">价格争议</div>
+                            <div class="tag">售后问题</div>
+                            <div class="tag">虚假宣传</div>
+                            <div class="tag">信息泄露</div>
+                        </div>
+                    </div>
+                    
+                    <div class="tag-group">
+                        <div class="tag-group-title">内容性质</div>
+                        <div class="tags" id="nature-tags">
+                            <div class="tag">负面评价</div>
+                            <div class="tag">中性讨论</div>
+                            <div class="tag">正面反馈</div>
+                            <div class="tag">投诉举报</div>
+                            <div class="tag">咨询求助</div>
+                        </div>
+                    </div>
+                    
+                    <div class="tag-group">
+                        <div class="tag-group-title">评分结果</div>
+                        <div class="tags" id="score-tags">
+                            <div class="tag">高风险</div>
+                            <div class="tag">中风险</div>
+                            <div class="tag">低风险</div>
+                            <div class="tag">无风险</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="links-section">
+                <div class="links-header">
+                    <div class="checkbox-group">
+                        <label class="checkbox-label">
+                            <input type="checkbox" id="select-all"> 全选
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" checked> 显示标题
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" checked> 显示来源
+                        </label>
+                        <label class="checkbox-label">
+                            <input type="checkbox" checked> 显示日期
+                        </label>
+                    </div>
+                    
+                    <div class="operation-tabs">
+                        <div class="operation-button" id="batch-process-button">一键处置</div>
+                    </div>
+                </div>
+                
+                <table class="links-table">
+                    <thead>
+                        <tr>
+                            <th width="5%"></th>
+                            <th width="35%">链接标题</th>
+                            <th width="15%">来源</th>
+                            <th width="15%">发布日期</th>
+                            <th width="30%">标签</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><input type="checkbox" class="link-checkbox"></td>
+                            <td class="link-title">某企业产品质量问题引发消费者不满</td>
+                            <td class="link-source">微博</td>
+                            <td class="link-date">2025-09-15</td>
+                            <td>
+                                <span class="tag-pill topic">产品质量</span>
+                                <span class="tag-pill nature">负面评价</span>
+                                <span class="tag-pill score">高风险</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><input type="checkbox" class="link-checkbox"></td>
+                            <td class="link-title">消费者投诉某企业虚假宣传问题</td>
+                            <td class="link-source">知乎</td>
+                            <td class="link-date">2025-09-14</td>
+                            <td>
+                                <span class="tag-pill topic">虚假宣传</span>
+                                <span class="tag-pill nature">投诉举报</span>
+                                <span class="tag-pill score">中风险</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><input type="checkbox" class="link-checkbox"></td>
+                            <td class="link-title">某企业售后服务态度差引发争议</td>
+                            <td class="link-source">小红书</td>
+                            <td class="link-date">2025-09-13</td>
+                            <td>
+                                <span class="tag-pill topic">服务态度</span>
+                                <span class="tag-pill nature">负面评价</span>
+                                <span class="tag-pill score">中风险</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><input type="checkbox" class="link-checkbox"></td>
+                            <td class="link-title">某企业涉嫌信息泄露引发用户担忧</td>
+                            <td class="link-source">微信公众号</td>
+                            <td class="link-date">2025-09-12</td>
+                            <td>
+                                <span class="tag-pill topic">信息泄露</span>
+                                <span class="tag-pill nature">负面评价</span>
+                                <span class="tag-pill score">高风险</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td><input type="checkbox" class="link-checkbox"></td>
+                            <td class="link-title">消费者对某企业产品价格表示不满</td>
+                            <td class="link-source">抖音</td>
+                            <td class="link-date">2025-09-11</td>
+                            <td>
+                                <span class="tag-pill topic">价格争议</span>
+                                <span class="tag-pill nature">中性讨论</span>
+                                <span class="tag-pill score">低风险</span>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        
+        <!-- 页面2：任务瀑布流处置页面 -->
+        <div class="page2">
+            <div class="page-header">
+                <div class="page-title">侵权任务处置</div>
+                <div class="back-button" id="back-to-page1">返回主页</div>
+            </div>
+            
+            <div class="task-filters">
+                <div class="task-filter active">全部任务</div>
+                <div class="task-filter">待处理</div>
+                <div class="task-filter">处理中</div>
+                <div class="task-filter">已完成</div>
+            </div>
+            
+            <div class="links-section">
+                <table class="links-table">
+                    <thead>
+                        <tr>
+                            <th width="35%">链接标题</th>
+                            <th width="15%">来源</th>
+                            <th width="15%">发布日期</th>
+                            <th width="20%">标签</th>
+                            <th width="15%">操作</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="link-title">某企业产品质量问题引发消费者不满</td>
+                            <td class="link-source">微博</td>
+                            <td class="link-date">2025-09-15</td>
+                            <td>
+                                <span class="tag-pill topic">产品质量</span>
+                                <span class="tag-pill score">高风险</span>
+                            </td>
+                            <td>
+                                <div class="table-actions">
+                                    <button class="table-button deliver-button">处置</button>
+                                    <button class="table-button view-button" id="view-task1">查看</button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="link-title">消费者投诉某企业虚假宣传问题</td>
+                            <td class="link-source">知乎</td>
+                            <td class="link-date">2025-09-14</td>
+                            <td>
+                                <span class="tag-pill topic">虚假宣传</span>
+                                <span class="tag-pill score">中风险</span>
+                            </td>
+                            <td>
+                                <div class="table-actions">
+                                    <button class="table-button deliver-button">处置</button>
+                                    <button class="table-button view-button">查看</button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="link-title">某企业售后服务态度差引发争议</td>
+                            <td class="link-source">小红书</td>
+                            <td class="link-date">2025-09-13</td>
+                            <td>
+                                <span class="tag-pill topic">服务态度</span>
+                                <span class="tag-pill score">中风险</span>
+                            </td>
+                            <td>
+                                <div class="table-actions">
+                                    <button class="table-button deliver-button">处置</button>
+                                    <button class="table-button view-button">查看</button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="link-title">某企业涉嫌信息泄露引发用户担忧</td>
+                            <td class="link-source">微信公众号</td>
+                            <td class="link-date">2025-09-12</td>
+                            <td>
+                                <span class="tag-pill topic">信息泄露</span>
+                                <span class="tag-pill score">高风险</span>
+                            </td>
+                            <td>
+                                <div class="table-actions">
+                                    <button class="table-button deliver-button">处置</button>
+                                    <button class="table-button view-button">查看</button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="link-title">消费者对某企业产品价格表示不满</td>
+                            <td class="link-source">抖音</td>
+                            <td class="link-date">2025-09-11</td>
+                            <td>
+                                <span class="tag-pill topic">价格争议</span>
+                                <span class="tag-pill score">低风险</span>
+                            </td>
+                            <td>
+                                <div class="table-actions">
+                                    <button class="table-button deliver-button">处置</button>
+                                    <button class="table-button view-button">查看</button>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="link-title">用户反映某企业App存在安全漏洞</td>
+                            <td class="link-source">Twitter</td>
+                            <td class="link-date">2025-09-10</td>
+                            <td>
+                                <span class="tag-pill topic">信息泄露</span>
+                                <span class="tag-pill score">高风险</span>
+                            </td>
+                            <td>
+                                <div class="table-actions">
+                                    <button class="table-button deliver-button">处置</button>
+                                    <button class="table-button view-button">查看</button>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        
+        <!-- 页面3：舆情内容编辑器页面 -->
+        <div class="page3">
+            <div class="page-header">
+                <div class="page-title">舆情内容编辑</div>
+                <div class="back-button" id="back-to-page2">返回任务列表</div>
+            </div>
+            
+            <div class="editor-container">
+                <div class="editor-header">
+                    <div class="editor-title">某企业产品质量问题引发消费者不满</div>
+                    <div class="ai-button">
+                        <span>AI生成</span>
+                    </div>
+                </div>
+                
+                <div class="editor-content">
+                    <textarea class="editor-textarea">近日，多名消费者在社交媒体平台反映某企业产品存在质量问题，引发广泛关注。消费者表示产品与宣传不符，使用过程中出现多种故障。
+
+根据用户反馈，主要问题包括：
+1. 产品使用寿命远低于宣传的预期
+2. 产品功能不完善，部分功能无法正常使用
+3. 产品质量存在安全隐患
+
+建议企业采取以下措施：
+- 立即成立专项小组调查产品问题
+- 向消费者发布致歉声明并提供补偿方案
+- 对问题产品进行召回或提供免费维修
+- 完善产品质量控制流程
+- 定期发布处理进展报告
+
+4. 沟通话术：
+"感谢您对我们产品的关注与反馈。我们非常重视您反映的问题，已成立专项小组进行全面调查。我们将以最高标准解决产品质量问题，并向受影响的消费者提供合理补偿。"
+
+5. 后续跟进：
+建议一周内完成问题排查，两周内发布完整解决方案，持续监测舆情变化。</textarea>
+                </div>
+                
+                <div class="editor-actions">
+                    <div class="editor-button edit-button">改</div>
+                    <div class="editor-button complete-button">完成</div>
+                </div>
+            </div>
+            
+            <div class="task-info">
+                <div class="info-item">
+                    <div class="info-label">任务来源：</div>
+                    <div class="info-value">微博</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">发布日期：</div>
+                    <div class="info-value">2025-09-15</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">标签：</div>
+                    <div class="info-value">
+                        <span class="tag-pill topic">产品质量</span>
+                        <span class="tag-pill nature">负面评价</span>
+                        <span class="tag-pill score">高风险</span>
+                    </div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">处理状态：</div>
+                    <div class="info-value">
+                        <span class="status-tag status-processing">处理中</span>
+                    </div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">处理人：</div>
+                    <div class="info-value">管理员</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // 页面切换功能
+        document.addEventListener('DOMContentLoaded', function() {
+            // 页面元素
+            const page1 = document.querySelector('.page1');
+            const page2 = document.querySelector('.page2');
+            const page3 = document.querySelector('.page3');
+            
+            // 页面1到页面2的跳转
+            const infringementCard = document.getElementById('infringement-card');
+            infringementCard.addEventListener('click', function() {
+                page1.style.display = 'none';
+                page2.style.display = 'block';
+                page3.style.display = 'none';
+            });
+            
+            // 页面2到页面1的返回
+            const backToPage1 = document.getElementById('back-to-page1');
+            backToPage1.addEventListener('click', function() {
+                page1.style.display = 'block';
+                page2.style.display = 'none';
+                page3.style.display = 'none';
+            });
+            
+            // 页面2到页面3的跳转
+            const viewTask1 = document.getElementById('view-task1');
+            viewTask1.addEventListener('click', function() {
+                page1.style.display = 'none';
+                page2.style.display = 'none';
+                page3.style.display = 'block';
+            });
+            
+            // 页面3到页面2的返回
+            const backToPage2 = document.getElementById('back-to-page2');
+            backToPage2.addEventListener('click', function() {
+                page1.style.display = 'none';
+                page2.style.display = 'block';
+                page3.style.display = 'none';
+            });
+            
+            // 标签点击交互
+            const tags = document.querySelectorAll('.tag');
+            tags.forEach(tag => {
+                tag.addEventListener('click', function() {
+                    this.classList.toggle('active');
+                });
+            });
+            
+            // 操作标签切换
+            const operationTabs = document.querySelectorAll('.operation-tab');
+            operationTabs.forEach(tab => {
+                tab.addEventListener('click', function() {
+                    operationTabs.forEach(t => t.classList.remove('active'));
+                    this.classList.add('active');
+                });
+            });
+            
+            // 任务筛选器交互
+            const taskFilters = document.querySelectorAll('.task-filter');
+            taskFilters.forEach(filter => {
+                filter.addEventListener('click', function() {
+                    taskFilters.forEach(f => f.classList.remove('active'));
+                    this.classList.add('active');
+                });
+            });
+            
+            // 修改投递按钮交互
+            const deliverButtons = document.querySelectorAll('.deliver-button');
+            deliverButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    alert('任务已处置！');
+                    this.textContent = '已处置';
+                    this.style.backgroundColor = '#52c41a';
+                    this.disabled = true;
+                });
+            });
+
+            // 确保查看按钮的点击事件
+            const viewButtons = document.querySelectorAll('.view-button');
+            viewButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    // 只有id为view-task1的按钮跳转到页面3
+                    if (this.id === 'view-task1') {
+                        page1.style.display = 'none';
+                        page2.style.display = 'none';
+                        page3.style.display = 'block';
+                    }
+                });
+            });
+            
+            // 编辑器按钮交互
+            const editButton = document.querySelector('.edit-button');
+            editButton.addEventListener('click', function() {
+                alert('内容已保存，状态已更新为"修改中"');
+            });
+            
+            const completeButton = document.querySelector('.complete-button');
+            completeButton.addEventListener('click', function() {
+                alert('任务已完成，状态已更新为"已完成"');
+                page3.style.display = 'none';
+                page2.style.display = 'block';
+            });
+            
+            // AI生成按钮交互
+            const aiButton = document.querySelector('.ai-button');
+            aiButton.addEventListener('click', function() {
+                const textarea = document.querySelector('.editor-textarea');
+                textarea.value = '【AI生成内容】\n\n针对某企业产品质量问题的舆情处理建议：\n\n1. 情况概述：\n多位消费者通过微博平台反映某企业产品质量存在严重问题，包括使用寿命短、功能缺失、安全隐患等，引发舆论关注。\n\n2. 风险评估：\n该舆情属于高风险级别，若不及时处理可能导致品牌形象受损、销量下滑、甚至面临法律诉讼。\n\n3. 处理建议：\n- 立即成立专项小组调查产品问题\n- 向消费者发布致歉声明并提供补偿方案\n- 对问题产品进行召回或提供免费维修\n- 完善产品质量控制流程\n- 定期发布处理进展报告\n\n4. 沟通话术：\n"感谢您对我们产品的关注与反馈。我们非常重视您反映的问题，已成立专项小组进行全面调查。我们将以最高标准解决产品质量问题，并向受影响的消费者提供合理补偿。"\n\n5. 后续跟进：\n建议一周内完成问题排查，两周内发布完整解决方案，持续监测舆情变化。';
+            });
+            
+            // 复选框交互
+            const checkboxes = document.querySelectorAll('.checkbox-label input');
+            checkboxes.forEach(checkbox => {
+                checkbox.addEventListener('change', function() {
+                    const columnIndex = Array.from(checkboxes).indexOf(this);
+                    const table = document.querySelector('.links-table');
+                    const rows = table.querySelectorAll('tbody tr');
+                    
+                    rows.forEach(row => {
+                        const cell = row.cells[columnIndex];
+                        if (this.checked) {
+                            cell.style.display = '';
+                        } else {
+                            cell.style.display = 'none';
+                        }
+                    });
+                });
+            });
+
+            // 全选功能
+            const selectAllCheckbox = document.getElementById('select-all');
+            const linkCheckboxes = document.querySelectorAll('.link-checkbox');
+
+            selectAllCheckbox.addEventListener('change', function() {
+                linkCheckboxes.forEach(checkbox => {
+                    checkbox.checked = this.checked;
+                });
+            });
+
+            // 一键处置按钮
+            const batchProcessButton = document.getElementById('batch-process-button');
+            batchProcessButton.addEventListener('click', function() {
+                const selectedLinks = document.querySelectorAll('.link-checkbox:checked');
+                if (selectedLinks.length === 0) {
+                    alert('请至少选择一个链接进行处置');
+                    return;
+                }
+                
+                if (confirm(`确认要处置已选择的 ${selectedLinks.length} 个链接吗？`)) {
+                    // 处理选中的链接
+                    page1.style.display = 'none';
+                    page2.style.display = 'block';
+                    page3.style.display = 'none';
+                }
+            });
+
+            // 舆情看板卡片点击跳转到外部链接
+            const dashboardCard = document.getElementById('dashboard-card');
+            dashboardCard.addEventListener('click', function() {
+                window.open('https://bi.aliyuncs.com/token3rd/dashboard/view/pc.htm?pageId=ece683bc-a964-45c0-803d-39058bb81e2c&accessTicket=03717921-e115-4a6a-8a5f-e080c14f5bf9&dd_orientation=auto&qbi_version_param=1', '_blank');
+            });
+        });
+    </script>
+</body>
+</html>
