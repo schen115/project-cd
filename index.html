@@ -2430,19 +2430,19 @@
                 // 更新对应任务的处置按钮
                 if (referrer === 'page2') {
                     const deliverButton = document.querySelector('#view-task1').nextElementSibling;
-                    deliverButton.textContent = '已完成';
+                    deliverButton.textContent = '已处置';
                     deliverButton.classList.remove('deliver-button');
                     deliverButton.classList.add('completed-button');
                     deliverButton.disabled = true;
                 } else if (referrer === 'page2-communication') {
                     const deliverButton = document.querySelector('#view-comm-task1').nextElementSibling;
-                    deliverButton.textContent = '已完成';
+                    deliverButton.textContent = '已处置';
                     deliverButton.classList.remove('deliver-button');
                     deliverButton.classList.add('completed-button');
                     deliverButton.disabled = true;
                 } else if (referrer === 'page2-legal') {
                     const deliverButton = document.querySelector('#view-legal-task1').nextElementSibling;
-                    deliverButton.textContent = '已完成';
+                    deliverButton.textContent = '已处置';
                     deliverButton.classList.remove('deliver-button');
                     deliverButton.classList.add('completed-button');
                     deliverButton.disabled = true;
