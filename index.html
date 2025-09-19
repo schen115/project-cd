@@ -140,20 +140,29 @@
             flex: 1;
         }
         
+        /* 恢复标签组样式为原来的布局 */
         .tag-groups {
-            margin-bottom: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px; /* 减小整体间距 */
         }
         
-        .tag-group {
-            margin-bottom: 15px;
+        /* 添加内容性质标签组样式 */
+        .content-nature-group {
+            margin-top: 0; /* 移除额外的上边距 */
         }
         
         .tag-group-title {
             font-size: 14px;
-            margin-bottom: 10px;
+            margin-bottom: 8px; /* 稍微减小标题和标签之间的间距 */
             color: #666;
         }
         
+        .tag-group {
+            margin-bottom: 0;
+        }
+        
+        /* 确保标签组内的标签正确显示 */
         .tags {
             display: flex;
             flex-wrap: wrap;
@@ -268,8 +277,8 @@
         }
         
         .tag-pill.nature {
-            background-color: #f6ffed;
-            color: #52c41a;
+            background-color: #f0f0f0;
+            color: #666666;
         }
         
         .tag-pill.score {
@@ -629,6 +638,351 @@
             border-radius: 4px;
             resize: vertical;
         }
+
+        /* 管理员页面样式 */
+        .admin-page {
+            display: none;
+        }
+
+        .admin-section {
+            background-color: white;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .admin-section-title {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #e8e8e8;
+        }
+
+        .admin-card-container {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+
+        .admin-card {
+            flex: 1;
+            background-color: #f5f7fa;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+        }
+
+        .admin-card-title {
+            font-size: 16px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            color: #333;
+        }
+
+        .admin-card-value {
+            font-size: 28px;
+            font-weight: bold;
+            color: #1890ff;
+            margin-bottom: 10px;
+        }
+
+        .admin-card-label {
+            font-size: 14px;
+            color: #999;
+        }
+
+        .admin-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .admin-table th, .admin-table td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #e8e8e8;
+        }
+
+        .admin-table th {
+            font-weight: bold;
+            background-color: #fafafa;
+        }
+
+        .admin-table tr:hover {
+            background-color: #f5f5f5;
+        }
+
+        .admin-chart {
+            height: 300px;
+            margin-top: 20px;
+            background-color: #f5f7fa;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #999;
+        }
+
+        .success-tag {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 10px;
+            font-size: 12px;
+            background-color: #f6ffed;
+            color: #52c41a;
+        }
+
+        .fail-tag {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 10px;
+            font-size: 12px;
+            background-color: #fff2e8;
+            color: #fa8c16;
+        }
+
+        /* 页面1的布局调整 */
+        .page1-top {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        
+        .dashboard-section {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .filter-section {
+            flex: 2;
+            margin-bottom: 0;
+        }
+        
+        .chart-container {
+            margin-top: 20px;
+            min-height: 150px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #999;
+            cursor: pointer;
+            background-color: #f5f7fa;
+            border-radius: 8px;
+            padding: 15px;
+        }
+        
+        .date-filter {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            align-items: center;
+        }
+        
+        .this-week-button {
+            padding: 8px 16px;
+            background-color: #f0f0f0;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-size: 14px;
+        }
+        
+        .this-week-button:hover {
+            background-color: #e0e0e0;
+        }
+        
+        .this-week-button.active {
+            background-color: #1890ff;
+            color: white;
+        }
+        
+        .horizontal-tag-groups {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 15px;
+        }
+        
+        .horizontal-tag-group {
+            flex: 1;
+        }
+
+        /* 修改CSS样式，使三个卡片并列显示 */
+        .disposal-cards {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+
+        .disposal-card {
+            flex: 1;
+            background-color: white;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .disposal-card-title {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        .disposal-card-stats {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .disposal-card .stat-item {
+            text-align: center;
+        }
+
+        .disposal-card .stat-value {
+            font-size: 24px;
+            font-weight: bold;
+            color: #1890ff;
+            margin-bottom: 5px;
+        }
+
+        .disposal-card .stat-label {
+            font-size: 12px;
+            color: #999;
+        }
+
+        /* 风险标签样式 */
+        .tag-pill.score.high-risk {
+            background-color: #fff1f0;
+            color: #f5222d;
+            border: 1px solid #ffa39e;
+        }
+        
+        .tag-pill.score.medium-risk {
+            background-color: #fff7e6;
+            color: #fa8c16;
+            border: 1px solid #ffd591;
+        }
+        
+        .tag-pill.score.low-risk {
+            background-color: #f6ffed;
+            color: #52c41a;
+            border: 1px solid #b7eb8f;
+        }
+        
+        /* 2. 交换按钮颜色 */
+        .table-button.view-button {
+            background-color: #1890ff;
+            color: white;
+        }
+        
+        .table-button.view-button:hover {
+            background-color: #40a9ff;
+        }
+        
+        .table-button.deliver-button {
+            background-color: #f0f0f0;
+            color: #333;
+        }
+        
+        .table-button.deliver-button:hover {
+            background-color: #e0e0e0;
+        }
+        
+        /* 添加已完成处置按钮样式 */
+        .table-button.completed-button {
+            background-color: #52c41a;
+            color: white;
+        }
+        
+        .table-button.completed-button:hover {
+            background-color: #73d13d;
+        }
+
+        /* 自定义确认弹窗样式 */
+        .confirm-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .confirm-modal-content {
+            background-color: white;
+            border-radius: 8px;
+            padding: 30px;
+            width: 400px;
+            max-width: 90%;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+        }
+        
+        .confirm-modal-title {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            color: #333;
+        }
+        
+        .confirm-modal-info {
+            margin-bottom: 20px;
+        }
+        
+        .confirm-modal-info-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        
+        .confirm-modal-info-label {
+            color: #666;
+        }
+        
+        .confirm-modal-info-value {
+            font-weight: bold;
+            color: #333;
+        }
+        
+        .confirm-modal-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+        }
+        
+        .confirm-modal-button {
+            padding: 8px 16px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.2s;
+        }
+        
+        .confirm-modal-button-cancel {
+            background-color: #f0f0f0;
+            color: #333;
+        }
+        
+        .confirm-modal-button-cancel:hover {
+            background-color: #e0e0e0;
+        }
+        
+        .confirm-modal-button-confirm {
+            background-color: #1890ff;
+            color: white;
+        }
+        
+        .confirm-modal-button-confirm:hover {
+            background-color: #40a9ff;
+        }
     </style>
 </head>
 <body>
@@ -637,35 +991,91 @@
             <div class="logo">舆情链接批量处理平台</div>
             <div class="user-info">
                 <span>管理员</span>
-                <div class="user-avatar">A</div>
+                <div class="user-avatar" id="admin-avatar">A</div>
             </div>
         </header>
         
         <!-- 页面1：舆情数据合作主页面 -->
         <div class="page1">
-            <div class="card-container">
-                <!-- 修改舆情看板卡片，添加ID -->
-                <div class="card" id="dashboard-card">
-                    <div class="card-title">舆情看板</div>
-                    <div class="card-stats">
-                        <div class="stat-item">
-                            <div class="stat-value">1024</div>
-                            <div class="stat-label">总链接量</div>
+            <!-- 顶部区域：舆情看板和筛选器 -->
+            <div class="page1-top">
+                <!-- 舆情看板 -->
+                <div class="dashboard-section">
+                    <div class="card" id="dashboard-card">
+                        <div class="card-title">舆情看板</div>
+                        <div class="card-stats">
+                            <div class="stat-item">
+                                <div class="stat-value">1024</div>
+                                <div class="stat-label">总链接量</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value">768</div>
+                                <div class="stat-label">已处理</div>
+                            </div>
+                            <div class="stat-item">
+                                <div class="stat-value">256</div>
+                                <div class="stat-label">待处理</div>
+                            </div>
                         </div>
-                        <div class="stat-item">
-                            <div class="stat-value">768</div>
-                            <div class="stat-label">已处理</div>
-                        </div>
-                        <div class="stat-item">
-                            <div class="stat-value">256</div>
-                            <div class="stat-label">待处理</div>
+                        <div class="chart-container" id="dashboard-chart">
+                            舆情趋势图表 (点击查看详情)
                         </div>
                     </div>
                 </div>
                 
-                <div class="card" id="infringement-card">
-                    <div class="card-title">侵权</div>
-                    <div class="card-stats">
+                <!-- 筛选器 -->
+                <div class="filter-section">
+                    <div class="filter-title">筛选器</div>
+                    <div class="date-filter">
+                        <input type="date" class="date-input" placeholder="开始日期">
+                        <span>至</span>
+                        <input type="date" class="date-input" placeholder="结束日期">
+                        <div class="this-week-button" id="this-week-button">本周</div>
+                    </div>
+                    
+                    <div class="tag-groups">
+                        <!-- 话题标签组 -->
+                        <div class="tag-group">
+                            <div class="tag-group-title">话题</div>
+                            <div class="tags" id="topic-tags">
+                                <div class="tag">产品质量</div>
+                                <div class="tag">服务态度</div>
+                                <div class="tag">价格争议</div>
+                                <div class="tag">售后问题</div>
+                                <div class="tag">虚假宣传</div>
+                                <div class="tag">信息泄露</div>
+                            </div>
+                        </div>
+                        
+                        <!-- 内容性质标签组 -->
+                        <div class="tag-group content-nature-group">
+                            <div class="tag-group-title">内容性质</div>
+                            <div class="tags" id="content-nature-tags">
+                                <div class="tag">侵权</div>
+                                <div class="tag">沟通</div>
+                                <div class="tag">司法</div>
+                            </div>
+                        </div>
+                        
+                        <!-- 评分结果标签组 -->
+                        <div class="tag-group">
+                            <div class="tag-group-title">评分结果</div>
+                            <div class="tags" id="score-tags">
+                                <div class="tag">高风险</div>
+                                <div class="tag">中风险</div>
+                                <div class="tag">低风险</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- 中间区域：处置方式卡片 -->
+            <div class="disposal-cards">
+                <!-- 侵权卡片 -->
+                <div class="disposal-card" id="infringement-card">
+                    <div class="disposal-card-title">侵权</div>
+                    <div class="disposal-card-stats">
                         <div class="stat-item">
                             <div class="stat-value">512</div>
                             <div class="stat-label">总链接量</div>
@@ -681,10 +1091,10 @@
                     </div>
                 </div>
                 
-                <!-- 沟通卡片添加ID -->
-                <div class="card" id="communication-card">
-                    <div class="card-title">沟通</div>
-                    <div class="card-stats">
+                <!-- 沟通卡片 -->
+                <div class="disposal-card" id="communication-card">
+                    <div class="disposal-card-title">沟通</div>
+                    <div class="disposal-card-stats">
                         <div class="stat-item">
                             <div class="stat-value">256</div>
                             <div class="stat-label">总链接量</div>
@@ -700,10 +1110,10 @@
                     </div>
                 </div>
                 
-                <!-- 司法卡片添加ID -->
-                <div class="card" id="legal-card">
-                    <div class="card-title">司法</div>
-                    <div class="card-stats">
+                <!-- 司法卡片 -->
+                <div class="disposal-card" id="legal-card">
+                    <div class="disposal-card-title">司法</div>
+                    <div class="disposal-card-stats">
                         <div class="stat-item">
                             <div class="stat-value">256</div>
                             <div class="stat-label">总链接量</div>
@@ -720,48 +1130,7 @@
                 </div>
             </div>
             
-            <div class="filter-section">
-                <div class="filter-title">筛选器</div>
-                <div class="date-filter">
-                    <input type="date" class="date-input" placeholder="开始日期">
-                    <span>至</span>
-                    <input type="date" class="date-input" placeholder="结束日期">
-                </div>
-                
-                <div class="tag-groups">
-                    <div class="tag-group">
-                        <div class="tag-group-title">话题</div>
-                        <div class="tags" id="topic-tags">
-                            <div class="tag">产品质量</div>
-                            <div class="tag">服务态度</div>
-                            <div class="tag">价格争议</div>
-                            <div class="tag">售后问题</div>
-                            <div class="tag">虚假宣传</div>
-                            <div class="tag">信息泄露</div>
-                        </div>
-                    </div>
-                    
-                    <div class="tag-group">
-                        <div class="tag-group-title">处置方式</div>
-                        <div class="tags" id="nature-tags">
-                            <div class="tag">侵权</div>
-                            <div class="tag">沟通</div>
-                            <div class="tag">司法</div>
-                        </div>
-                    </div>
-                    
-                    <div class="tag-group">
-                        <div class="tag-group-title">评分结果</div>
-                        <div class="tags" id="score-tags">
-                            <div class="tag">高风险</div>
-                            <div class="tag">中风险</div>
-                            <div class="tag">低风险</div>
-                            <div class="tag">无风险</div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
+            <!-- 底部区域：链接瀑布流 -->
             <div class="links-section">
                 <div class="links-header">
                     <div class="checkbox-group">
@@ -802,8 +1171,8 @@
                             <td class="link-date">2025-09-15</td>
                             <td>
                                 <span class="tag-pill topic">产品质量</span>
-                                <span class="tag-pill nature">负面评价</span>
-                                <span class="tag-pill score">高风险</span>
+                                <span class="tag-pill nature">侵权</span>
+                                <span class="tag-pill score high-risk">高风险</span>
                             </td>
                         </tr>
                         <tr>
@@ -813,8 +1182,8 @@
                             <td class="link-date">2025-09-14</td>
                             <td>
                                 <span class="tag-pill topic">虚假宣传</span>
-                                <span class="tag-pill nature">投诉举报</span>
-                                <span class="tag-pill score">中风险</span>
+                                <span class="tag-pill nature">司法</span>
+                                <span class="tag-pill score medium-risk">中风险</span>
                             </td>
                         </tr>
                         <tr>
@@ -824,8 +1193,8 @@
                             <td class="link-date">2025-09-13</td>
                             <td>
                                 <span class="tag-pill topic">服务态度</span>
-                                <span class="tag-pill nature">负面评价</span>
-                                <span class="tag-pill score">中风险</span>
+                                <span class="tag-pill nature">沟通</span>
+                                <span class="tag-pill score medium-risk">中风险</span>
                             </td>
                         </tr>
                         <tr>
@@ -835,8 +1204,8 @@
                             <td class="link-date">2025-09-12</td>
                             <td>
                                 <span class="tag-pill topic">信息泄露</span>
-                                <span class="tag-pill nature">负面评价</span>
-                                <span class="tag-pill score">高风险</span>
+                                <span class="tag-pill nature">司法</span>
+                                <span class="tag-pill score medium-risk">中风险</span>
                             </td>
                         </tr>
                         <tr>
@@ -846,8 +1215,8 @@
                             <td class="link-date">2025-09-11</td>
                             <td>
                                 <span class="tag-pill topic">价格争议</span>
-                                <span class="tag-pill nature">中性讨论</span>
-                                <span class="tag-pill score">低风险</span>
+                                <span class="tag-pill nature">沟通</span>
+                                <span class="tag-pill score low-risk">低风险</span>
                             </td>
                         </tr>
                     </tbody>
@@ -887,12 +1256,12 @@
                             <td class="link-date">2025-09-15</td>
                             <td>
                                 <span class="tag-pill topic">产品质量</span>
-                                <span class="tag-pill score">高风险</span>
+                                <span class="tag-pill score high-risk">高风险</span>
                             </td>
                             <td>
                                 <div class="table-actions">
-                                    <button class="table-button deliver-button">处置</button>
                                     <button class="table-button view-button" id="view-task1">查看</button>
+                                    <button class="table-button deliver-button">未完成</button>
                                 </div>
                             </td>
                         </tr>
@@ -902,12 +1271,12 @@
                             <td class="link-date">2025-09-14</td>
                             <td>
                                 <span class="tag-pill topic">虚假宣传</span>
-                                <span class="tag-pill score">中风险</span>
+                                <span class="tag-pill score medium-risk">中风险</span>
                             </td>
                             <td>
                                 <div class="table-actions">
-                                    <button class="table-button deliver-button">处置</button>
                                     <button class="table-button view-button">查看</button>
+                                    <button class="table-button deliver-button">未完成</button>
                                 </div>
                             </td>
                         </tr>
@@ -917,12 +1286,12 @@
                             <td class="link-date">2025-09-13</td>
                             <td>
                                 <span class="tag-pill topic">服务态度</span>
-                                <span class="tag-pill score">中风险</span>
+                                <span class="tag-pill score medium-risk">中风险</span>
                             </td>
                             <td>
                                 <div class="table-actions">
-                                    <button class="table-button deliver-button">处置</button>
                                     <button class="table-button view-button">查看</button>
+                                    <button class="table-button deliver-button">未完成</button>
                                 </div>
                             </td>
                         </tr>
@@ -932,12 +1301,12 @@
                             <td class="link-date">2025-09-12</td>
                             <td>
                                 <span class="tag-pill topic">信息泄露</span>
-                                <span class="tag-pill score">高风险</span>
+                                <span class="tag-pill score medium-risk">中风险</span>
                             </td>
                             <td>
                                 <div class="table-actions">
-                                    <button class="table-button deliver-button">处置</button>
                                     <button class="table-button view-button">查看</button>
+                                    <button class="table-button deliver-button">未完成</button>
                                 </div>
                             </td>
                         </tr>
@@ -947,12 +1316,12 @@
                             <td class="link-date">2025-09-11</td>
                             <td>
                                 <span class="tag-pill topic">价格争议</span>
-                                <span class="tag-pill score">低风险</span>
+                                <span class="tag-pill score low-risk">低风险</span>
                             </td>
                             <td>
                                 <div class="table-actions">
-                                    <button class="table-button deliver-button">处置</button>
                                     <button class="table-button view-button">查看</button>
+                                    <button class="table-button deliver-button">未完成</button>
                                 </div>
                             </td>
                         </tr>
@@ -962,12 +1331,12 @@
                             <td class="link-date">2025-09-10</td>
                             <td>
                                 <span class="tag-pill topic">信息泄露</span>
-                                <span class="tag-pill score">高风险</span>
+                                <span class="tag-pill score medium-risk">中风险</span>
                             </td>
                             <td>
                                 <div class="table-actions">
-                                    <button class="table-button deliver-button">处置</button>
                                     <button class="table-button view-button">查看</button>
+                                    <button class="table-button deliver-button">未完成</button>
                                 </div>
                             </td>
                         </tr>
@@ -1008,12 +1377,12 @@
                             <td class="link-date">2025-09-13</td>
                             <td>
                                 <span class="tag-pill topic">服务态度</span>
-                                <span class="tag-pill score">中风险</span>
+                                <span class="tag-pill score medium-risk">中风险</span>
                             </td>
                             <td>
                                 <div class="table-actions">
-                                    <button class="table-button deliver-button">处置</button>
                                     <button class="table-button view-button" id="view-comm-task1">查看</button>
+                                    <button class="table-button deliver-button">未完成</button>
                                 </div>
                             </td>
                         </tr>
@@ -1027,8 +1396,8 @@
                             </td>
                             <td>
                                 <div class="table-actions">
-                                    <button class="table-button deliver-button">处置</button>
                                     <button class="table-button view-button">查看</button>
+                                    <button class="table-button deliver-button">未完成</button>
                                 </div>
                             </td>
                         </tr>
@@ -1042,8 +1411,8 @@
                             </td>
                             <td>
                                 <div class="table-actions">
-                                    <button class="table-button deliver-button">处置</button>
                                     <button class="table-button view-button">查看</button>
+                                    <button class="table-button deliver-button">未完成</button>
                                 </div>
                             </td>
                         </tr>
@@ -1057,8 +1426,8 @@
                             </td>
                             <td>
                                 <div class="table-actions">
-                                    <button class="table-button deliver-button">处置</button>
                                     <button class="table-button view-button">查看</button>
+                                    <button class="table-button deliver-button">未完成</button>
                                 </div>
                             </td>
                         </tr>
@@ -1099,12 +1468,12 @@
                             <td class="link-date">2025-09-14</td>
                             <td>
                                 <span class="tag-pill topic">产品质量</span>
-                                <span class="tag-pill score">高风险</span>
+                                <span class="tag-pill score high-risk">高风险</span>
                             </td>
                             <td>
                                 <div class="table-actions">
-                                    <button class="table-button deliver-button">处置</button>
                                     <button class="table-button view-button" id="view-legal-task1">查看</button>
+                                    <button class="table-button deliver-button">未完成</button>
                                 </div>
                             </td>
                         </tr>
@@ -1114,12 +1483,12 @@
                             <td class="link-date">2025-09-13</td>
                             <td>
                                 <span class="tag-pill topic">虚假宣传</span>
-                                <span class="tag-pill score">高风险</span>
+                                <span class="tag-pill score high-risk">高风险</span>
                             </td>
                             <td>
                                 <div class="table-actions">
-                                    <button class="table-button deliver-button">处置</button>
                                     <button class="table-button view-button">查看</button>
+                                    <button class="table-button deliver-button">未完成</button>
                                 </div>
                             </td>
                         </tr>
@@ -1129,12 +1498,12 @@
                             <td class="link-date">2025-09-12</td>
                             <td>
                                 <span class="tag-pill topic">信息泄露</span>
-                                <span class="tag-pill score">高风险</span>
+                                <span class="tag-pill score high-risk">高风险</span>
                             </td>
                             <td>
                                 <div class="table-actions">
-                                    <button class="table-button deliver-button">处置</button>
                                     <button class="table-button view-button">查看</button>
+                                    <button class="table-button deliver-button">未完成</button>
                                 </div>
                             </td>
                         </tr>
@@ -1144,12 +1513,12 @@
                             <td class="link-date">2025-09-10</td>
                             <td>
                                 <span class="tag-pill topic">售后问题</span>
-                                <span class="tag-pill score">中风险</span>
+                                <span class="tag-pill score medium-risk">中风险</span>
                             </td>
                             <td>
                                 <div class="table-actions">
-                                    <button class="table-button deliver-button">处置</button>
                                     <button class="table-button view-button">查看</button>
+                                    <button class="table-button deliver-button">未完成</button>
                                 </div>
                             </td>
                         </tr>
@@ -1206,7 +1575,7 @@
                 </div>
                 
                 <div class="editor-actions">
-                    <div class="editor-button edit-button">改</div>
+                    <div class="editor-button edit-button">保存</div>
                     <div class="editor-button complete-button">完成</div>
                 </div>
             </div>
@@ -1224,8 +1593,8 @@
                     <div class="info-label">标签：</div>
                     <div class="info-value">
                         <span class="tag-pill topic">产品质量</span>
-                        <span class="tag-pill nature">负面评价</span>
-                        <span class="tag-pill score">高风险</span>
+                        <span class="tag-pill nature">侵权</span>
+                        <span class="tag-pill score high-risk">高风险</span>
                     </div>
                 </div>
                 <div class="info-item">
@@ -1349,7 +1718,7 @@
                 </div>
                 
                 <div class="editor-actions">
-                    <div class="editor-button edit-button">改</div>
+                    <div class="editor-button edit-button">保存</div>
                     <div class="editor-button complete-button">完成</div>
                 </div>
             </div>
@@ -1367,8 +1736,8 @@
                     <div class="info-label">标签：</div>
                     <div class="info-value">
                         <span class="tag-pill topic">服务态度</span>
-                        <span class="tag-pill nature">负面评价</span>
-                        <span class="tag-pill score">中风险</span>
+                        <span class="tag-pill nature">沟通</span>
+                        <span class="tag-pill score medium-risk">中风险</span>
                     </div>
                 </div>
                 <div class="info-item">
@@ -1567,7 +1936,7 @@
                 </div>
                 
                 <div class="editor-actions">
-                    <div class="editor-button edit-button">改</div>
+                    <div class="editor-button edit-button">保存</div>
                     <div class="editor-button complete-button">完成</div>
                 </div>
             </div>
@@ -1585,8 +1954,8 @@
                     <div class="info-label">标签：</div>
                     <div class="info-value">
                         <span class="tag-pill topic">产品质量</span>
-                        <span class="tag-pill nature">负面评价</span>
-                        <span class="tag-pill score">高风险</span>
+                        <span class="tag-pill nature">侵权</span>
+                        <span class="tag-pill score high-risk">高风险</span>
                     </div>
                 </div>
                 <div class="info-item">
@@ -1598,6 +1967,215 @@
                 <div class="info-item">
                     <div class="info-label">处理人：</div>
                     <div class="info-value">管理员</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 管理员页面 -->
+        <div class="admin-page">
+            <div class="page-header">
+                <div class="page-title">管理员控制台</div>
+                <div class="back-button" id="back-from-admin">返回主页</div>
+            </div>
+            
+            <!-- 投诉结果统计 -->
+            <div class="admin-section">
+                <div class="admin-section-title">投诉结果统计</div>
+                
+                <div class="admin-card-container">
+                    <div class="admin-card">
+                        <div class="admin-card-title">总投诉量</div>
+                        <div class="admin-card-value">256</div>
+                        <div class="admin-card-label">本月累计</div>
+                    </div>
+                    
+                    <div class="admin-card">
+                        <div class="admin-card-title">成功处理</div>
+                        <div class="admin-card-value">192</div>
+                        <div class="admin-card-label">成功率：75%</div>
+                    </div>
+                    
+                    <div class="admin-card">
+                        <div class="admin-card-title">处理中</div>
+                        <div class="admin-card-value">48</div>
+                        <div class="admin-card-label">预计3天内完成</div>
+                    </div>
+                    
+                    <div class="admin-card">
+                        <div class="admin-card-title">未处理</div>
+                        <div class="admin-card-value">16</div>
+                        <div class="admin-card-label">需优先处理</div>
+                    </div>
+                </div>
+                
+                <table class="admin-table">
+                    <thead>
+                        <tr>
+                            <th>投诉ID</th>
+                            <th>投诉内容</th>
+                            <th>投诉平台</th>
+                            <th>提交时间</th>
+                            <th>处理状态</th>
+                            <th>处理结果</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>TS20250915001</td>
+                            <td>某企业产品质量问题</td>
+                            <td>微博</td>
+                            <td>2025-09-15</td>
+                            <td>已处理</td>
+                            <td><span class="success-tag">成功</span></td>
+                        </tr>
+                        <tr>
+                            <td>TS20250914002</td>
+                            <td>某企业虚假宣传问题</td>
+                            <td>知乎</td>
+                            <td>2025-09-14</td>
+                            <td>已处理</td>
+                            <td><span class="success-tag">成功</span></td>
+                        </tr>
+                        <tr>
+                            <td>TS20250913003</td>
+                            <td>某企业售后服务态度差</td>
+                            <td>小红书</td>
+                            <td>2025-09-13</td>
+                            <td>已处理</td>
+                            <td><span class="success-tag">成功</span></td>
+                        </tr>
+                        <tr>
+                            <td>TS20250912004</td>
+                            <td>某企业涉嫌信息泄露</td>
+                            <td>微信公众号</td>
+                            <td>2025-09-12</td>
+                            <td>处理中</td>
+                            <td>-</td>
+                        </tr>
+                        <tr>
+                            <td>TS20250911005</td>
+                            <td>某企业产品价格争议</td>
+                            <td>抖音</td>
+                            <td>2025-09-11</td>
+                            <td>已处理</td>
+                            <td><span class="fail-tag">失败</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+                
+                <div class="admin-chart">
+                    投诉处理趋势图（此处为图表占位，实际项目中可接入echarts等图表库）
+                </div>
+            </div>
+            
+            <!-- Token数量和计费 -->
+            <div class="admin-section">
+                <div class="admin-section-title">Token数量和计费</div>
+                
+                <div class="admin-card-container">
+                    <div class="admin-card">
+                        <div class="admin-card-title">本月消耗Token</div>
+                        <div class="admin-card-value">1,256,789</div>
+                        <div class="admin-card-label">较上月 +12.5%</div>
+                    </div>
+                    
+                    <div class="admin-card">
+                        <div class="admin-card-title">本月计费金额</div>
+                        <div class="admin-card-value">¥3,856.42</div>
+                        <div class="admin-card-label">较上月 +15.3%</div>
+                    </div>
+                    
+                    <div class="admin-card">
+                        <div class="admin-card-title">平均每任务Token</div>
+                        <div class="admin-card-value">4,910</div>
+                        <div class="admin-card-label">较上月 -5.2%</div>
+                    </div>
+                    
+                    <div class="admin-card">
+                        <div class="admin-card-title">剩余Token额度</div>
+                        <div class="admin-card-value">8,743,211</div>
+                        <div class="admin-card-label">预计可用30天</div>
+                    </div>
+                </div>
+                
+                <table class="admin-table">
+                    <thead>
+                        <tr>
+                            <th>日期</th>
+                            <th>消耗Token</th>
+                            <th>任务数量</th>
+                            <th>计费金额</th>
+                            <th>平均每任务Token</th>
+                            <th>平均每任务成本</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>2025-09-15</td>
+                            <td>125,678</td>
+                            <td>26</td>
+                            <td>¥385.64</td>
+                            <td>4,833</td>
+                            <td>¥14.83</td>
+                        </tr>
+                        <tr>
+                            <td>2025-09-14</td>
+                            <td>118,945</td>
+                            <td>24</td>
+                            <td>¥365.21</td>
+                            <td>4,956</td>
+                            <td>¥15.22</td>
+                        </tr>
+                        <tr>
+                            <td>2025-09-13</td>
+                            <td>132,456</td>
+                            <td>28</td>
+                            <td>¥406.82</td>
+                            <td>4,731</td>
+                            <td>¥14.53</td>
+                        </tr>
+                        <tr>
+                            <td>2025-09-12</td>
+                            <td>115,789</td>
+                            <td>23</td>
+                            <td>¥355.67</td>
+                            <td>5,034</td>
+                            <td>¥15.46</td>
+                        </tr>
+                        <tr>
+                            <td>2025-09-11</td>
+                            <td>127,890</td>
+                            <td>25</td>
+                            <td>¥392.78</td>
+                            <td>5,116</td>
+                            <td>¥15.71</td>
+                        </tr>
+                    </tbody>
+                </table>
+                
+                <div class="admin-chart">
+                    Token消耗趋势图（此处为图表占位，实际项目中可接入echarts等图表库）
+                </div>
+            </div>
+        </div>
+
+        <!-- 添加确认弹窗HTML结构 -->
+        <div class="confirm-modal" id="confirm-modal">
+            <div class="confirm-modal-content">
+                <div class="confirm-modal-title">确认处置</div>
+                <div class="confirm-modal-info">
+                    <div class="confirm-modal-info-item">
+                        <div class="confirm-modal-info-label">消耗Token数量：</div>
+                        <div class="confirm-modal-info-value" id="token-count">4,832</div>
+                    </div>
+                    <div class="confirm-modal-info-item">
+                        <div class="confirm-modal-info-label">预计费用：</div>
+                        <div class="confirm-modal-info-value" id="estimated-cost">¥14.83</div>
+                    </div>
+                </div>
+                <div class="confirm-modal-actions">
+                    <button class="confirm-modal-button confirm-modal-button-cancel" id="confirm-cancel">返回</button>
+                    <button class="confirm-modal-button confirm-modal-button-confirm" id="confirm-proceed">确认处置</button>
                 </div>
             </div>
         </div>
@@ -1614,6 +2192,7 @@
             const page3Infringement = document.querySelector('.page3-infringement');
             const page3Communication = document.querySelector('.page3-communication');
             const page3Legal = document.querySelector('.page3-legal');
+            const adminPage = document.querySelector('.admin-page');
             
             // 页面1到侵权页面的跳转
             const infringementCard = document.getElementById('infringement-card');
@@ -1625,6 +2204,7 @@
                 page3Infringement.style.display = 'none';
                 page3Communication.style.display = 'none';
                 page3Legal.style.display = 'none';
+                adminPage.style.display = 'none';
             });
             
             // 页面1到沟通页面的跳转
@@ -1637,6 +2217,7 @@
                 page3Infringement.style.display = 'none';
                 page3Communication.style.display = 'none';
                 page3Legal.style.display = 'none';
+                adminPage.style.display = 'none';
             });
             
             // 页面1到司法页面的跳转
@@ -1649,6 +2230,7 @@
                 page3Infringement.style.display = 'none';
                 page3Communication.style.display = 'none';
                 page3Legal.style.display = 'none';
+                adminPage.style.display = 'none';
             });
             
             // 各页面返回到页面1
@@ -1662,7 +2244,28 @@
                     page3Infringement.style.display = 'none';
                     page3Communication.style.display = 'none';
                     page3Legal.style.display = 'none';
+                    adminPage.style.display = 'none';
                 });
+            });
+            
+            // 管理员头像点击事件
+            const adminAvatar = document.getElementById('admin-avatar');
+            adminAvatar.addEventListener('click', function() {
+                page1.style.display = 'none';
+                page2.style.display = 'none';
+                page2Communication.style.display = 'none';
+                page2Legal.style.display = 'none';
+                page3Infringement.style.display = 'none';
+                page3Communication.style.display = 'none';
+                page3Legal.style.display = 'none';
+                adminPage.style.display = 'block';
+            });
+            
+            // 管理员页面返回按钮
+            const backFromAdmin = document.getElementById('back-from-admin');
+            backFromAdmin.addEventListener('click', function() {
+                adminPage.style.display = 'none';
+                page1.style.display = 'block';
             });
             
             // 侵权页面查看按钮
@@ -1675,6 +2278,7 @@
                 page3Infringement.style.display = 'block';
                 page3Communication.style.display = 'none';
                 page3Legal.style.display = 'none';
+                adminPage.style.display = 'none';
                 sessionStorage.setItem('referrer', 'page2');
             });
             
@@ -1688,6 +2292,7 @@
                 page3Infringement.style.display = 'none';
                 page3Communication.style.display = 'block';
                 page3Legal.style.display = 'none';
+                adminPage.style.display = 'none';
                 sessionStorage.setItem('referrer', 'page2-communication');
             });
             
@@ -1701,6 +2306,7 @@
                 page3Infringement.style.display = 'none';
                 page3Communication.style.display = 'none';
                 page3Legal.style.display = 'block';
+                adminPage.style.display = 'none';
                 sessionStorage.setItem('referrer', 'page2-legal');
             });
             
@@ -1714,6 +2320,7 @@
                 page3Infringement.style.display = 'none';
                 page3Communication.style.display = 'none';
                 page3Legal.style.display = 'none';
+                adminPage.style.display = 'none';
             });
             
             // 页面3-沟通返回按钮
@@ -1726,6 +2333,7 @@
                 page3Infringement.style.display = 'none';
                 page3Communication.style.display = 'none';
                 page3Legal.style.display = 'none';
+                adminPage.style.display = 'none';
             });
             
             // 页面3-司法返回按钮
@@ -1738,6 +2346,7 @@
                 page3Infringement.style.display = 'none';
                 page3Communication.style.display = 'none';
                 page3Legal.style.display = 'none';
+                adminPage.style.display = 'none';
             });
             
             // 确保查看按钮的点击事件
@@ -1753,6 +2362,7 @@
                         page3Infringement.style.display = 'block';
                         page3Communication.style.display = 'none';
                         page3Legal.style.display = 'none';
+                        adminPage.style.display = 'none';
                     }
                 });
             });
@@ -1765,20 +2375,81 @@
                 });
             });
             
+            // 修改完成按钮的交互逻辑
             const completeButtons = document.querySelectorAll('.complete-button');
             completeButtons.forEach(button => {
                 button.addEventListener('click', function() {
-                    alert('任务已完成，状态已更新为"已完成"');
-                    // 根据来源页面返回
+                    // 显示确认弹窗
+                    const confirmModal = document.getElementById('confirm-modal');
+                    const tokenCount = document.getElementById('token-count');
+                    const estimatedCost = document.getElementById('estimated-cost');
+                    
+                    // 根据不同任务类型设置不同的token数量和费用
                     const referrer = sessionStorage.getItem('referrer') || 'page2';
-                    page1.style.display = 'none';
-                    page2.style.display = referrer === 'page2' ? 'block' : 'none';
-                    page2Communication.style.display = referrer === 'page2-communication' ? 'block' : 'none';
-                    page2Legal.style.display = referrer === 'page2-legal' ? 'block' : 'none';
-                    page3Infringement.style.display = 'none';
-                    page3Communication.style.display = 'none';
-                    page3Legal.style.display = 'none';
+                    if (referrer === 'page2') {
+                        tokenCount.textContent = '4,832';
+                        estimatedCost.textContent = '¥14.83';
+                    } else if (referrer === 'page2-communication') {
+                        tokenCount.textContent = '5,246';
+                        estimatedCost.textContent = '¥16.12';
+                    } else if (referrer === 'page2-legal') {
+                        tokenCount.textContent = '6,105';
+                        estimatedCost.textContent = '¥18.75';
+                    }
+                    
+                    // 显示弹窗
+                    confirmModal.style.display = 'flex';
                 });
+            });
+            
+            // 取消按钮事件处理
+            document.getElementById('confirm-cancel').addEventListener('click', function() {
+                // 隐藏确认弹窗
+                document.getElementById('confirm-modal').style.display = 'none';
+            });
+            
+            // 确认处置按钮事件处理
+            document.getElementById('confirm-proceed').addEventListener('click', function() {
+                // 隐藏确认弹窗
+                document.getElementById('confirm-modal').style.display = 'none';
+                
+                // 记录任务已完成
+                sessionStorage.setItem('task_completed', 'true');
+                
+                // 根据来源页面返回
+                const referrer = sessionStorage.getItem('referrer') || 'page2';
+                page1.style.display = 'none';
+                page2.style.display = referrer === 'page2' ? 'block' : 'none';
+                page2Communication.style.display = referrer === 'page2-communication' ? 'block' : 'none';
+                page2Legal.style.display = referrer === 'page2-legal' ? 'block' : 'none';
+                page3Infringement.style.display = 'none';
+                page3Communication.style.display = 'none';
+                page3Legal.style.display = 'none';
+                adminPage.style.display = 'none';
+                
+                // 更新对应任务的处置按钮
+                if (referrer === 'page2') {
+                    const deliverButton = document.querySelector('#view-task1').nextElementSibling;
+                    deliverButton.textContent = '已完成';
+                    deliverButton.classList.remove('deliver-button');
+                    deliverButton.classList.add('completed-button');
+                    deliverButton.disabled = true;
+                } else if (referrer === 'page2-communication') {
+                    const deliverButton = document.querySelector('#view-comm-task1').nextElementSibling;
+                    deliverButton.textContent = '已完成';
+                    deliverButton.classList.remove('deliver-button');
+                    deliverButton.classList.add('completed-button');
+                    deliverButton.disabled = true;
+                } else if (referrer === 'page2-legal') {
+                    const deliverButton = document.querySelector('#view-legal-task1').nextElementSibling;
+                    deliverButton.textContent = '已完成';
+                    deliverButton.classList.remove('deliver-button');
+                    deliverButton.classList.add('completed-button');
+                    deliverButton.disabled = true;
+                }
+                
+                // 显示处置成功提示
+                alert('处置成功！');
             });
             
             // AI生成按钮交互
@@ -1786,7 +2457,7 @@
             aiButtons.forEach(button => {
                 button.addEventListener('click', function() {
                     const textarea = this.closest('.editor-container').querySelector('.editor-textarea');
-                    textarea.value = '【AI生成内容】\n\n针对某企业产品质量问题的舆情处理建议：\n\n1. 情况概述：\n多位消费者在社交媒体平台反映某企业产品存在质量问题，引发广泛关注。消费者表示产品与宣传不符，使用过程中出现多种故障。\n\n2. 风险评估：\n该舆情属于高风险级别，若不及时处理可能导致品牌形象受损、销量下滑、甚至面临法律诉讼。\n\n3. 处理建议：\n- 立即成立专项小组调查产品问题\n- 向消费者发布致歉声明并提供补偿方案\n- 对问题产品进行召回或提供免费维修\n- 完善产品质量控制流程\n- 定期发布处理进展报告\n\n4. 沟通话术：\n"感谢您对我们产品的关注与反馈。我们非常重视您反映的问题，已成立专项小组进行全面调查。我们将以最高标准解决产品质量问题，并向受影响的消费者提供合理补偿。"\n\n5. 后续跟进：\n建议一周内完成问题排查，两周内发布完整解决方案，持续监测舆情变化。';
+                    textarea.value = '【AI生成内容】\n\n针对某企业产品质量问题的舆情处理建议：\n\n1. 情况概述：\n多位消费者通过微博平台反映某企业产品存在质量问题，引发广泛关注。消费者表示产品与宣传不符，使用过程中出现多种故障。\n\n2. 风险评估：\n该舆情属于高风险级别，若不及时处理可能导致品牌形象受损、销量下滑、甚至面临法律诉讼。\n\n3. 处理建议：\n- 立即成立专项小组调查产品问题\n- 向消费者发布致歉声明并提供补偿方案\n- 对问题产品进行召回或提供免费维修\n- 完善产品质量控制流程\n- 定期发布处理进展报告\n\n4. 沟通话术：\n"感谢您对我们产品的关注与反馈。我们非常重视您反映的问题，已成立专项小组进行全面调查。我们将以最高标准解决产品质量问题，并向受影响的消费者提供合理补偿。"\n\n5. 后续跟进：\n建议一周内完成问题排查，两周内发布完整解决方案，持续监测舆情变化。';
                 });
             });
             
@@ -1832,15 +2503,61 @@
                     // 处理选中的链接
                     page1.style.display = 'none';
                     page2.style.display = 'block';
+                    page2Communication.style.display = 'none';
+                    page2Legal.style.display = 'none';
                     page3Infringement.style.display = 'none';
                     page3Communication.style.display = 'none';
                     page3Legal.style.display = 'none';
+                    adminPage.style.display = 'none';
                 }
             });
 
             // 舆情看板卡片点击跳转到外部链接
             const dashboardCard = document.getElementById('dashboard-card');
             dashboardCard.addEventListener('click', function() {
+                window.open('https://bi.aliyuncs.com/token3rd/dashboard/view/pc.htm?pageId=ece683bc-a964-45c0-803d-39058bb81e2c&accessTicket=03717921-e115-4a6a-8a5f-e080c14f5bf9&dd_orientation=auto&qbi_version_param=1', '_blank');
+        });
+
+            // 添加本周按钮功能
+            const thisWeekButton = document.getElementById('this-week-button');
+            thisWeekButton.addEventListener('click', function() {
+                this.classList.toggle('active');
+                
+                // 获取本周的开始日期和结束日期
+                const today = new Date();
+                const dayOfWeek = today.getDay(); // 0是周日，1是周一，以此类推
+                
+                // 计算本周一的日期
+                const mondayOffset = dayOfWeek === 0 ? -6 : 1 - dayOfWeek; // 如果今天是周日，则上周一是6天前；否则，本周一是(1-dayOfWeek)天前
+                const monday = new Date(today);
+                monday.setDate(today.getDate() + mondayOffset);
+                
+                // 计算本周日的日期
+                const sunday = new Date(monday);
+                sunday.setDate(monday.getDate() + 6);
+                
+                // 格式化日期为YYYY-MM-DD
+                const formatDate = (date) => {
+                    const year = date.getFullYear();
+                    const month = String(date.getMonth() + 1).padStart(2, '0');
+                    const day = String(date.getDate()).padStart(2, '0');
+                    return `${year}-${month}-${day}`;
+                };
+                
+                // 设置日期输入框的值
+                const dateInputs = document.querySelectorAll('.date-input');
+                if (this.classList.contains('active')) {
+                    dateInputs[0].value = formatDate(monday);
+                    dateInputs[1].value = formatDate(sunday);
+                } else {
+                    dateInputs[0].value = '';
+                    dateInputs[1].value = '';
+                }
+            });
+            
+            // 舆情看板图表点击事件
+            const dashboardChart = document.getElementById('dashboard-chart');
+            dashboardChart.addEventListener('click', function() {
                 window.open('https://bi.aliyuncs.com/token3rd/dashboard/view/pc.htm?pageId=ece683bc-a964-45c0-803d-39058bb81e2c&accessTicket=03717921-e115-4a6a-8a5f-e080c14f5bf9&dd_orientation=auto&qbi_version_param=1', '_blank');
             });
         });
