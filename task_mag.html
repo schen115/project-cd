@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>任务管理列表 - 舆情链接批量处理平台</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "PingFang SC", "Microsoft YaHei", sans-serif;
+        }
+        
+        body {
+            background-color: #f5f7fa;
+            color: #333;
+            font-size: 14px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+            border-bottom: 1px solid #e8e8e8;
+            margin-bottom: 20px;
+        }
+        
+        .logo {
+            font-size: 20px;
+            font-weight: bold;
+            color: #1890ff;
+        }
+        
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .user-avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background-color: #1890ff;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        /* 页面标题和返回按钮样式 */
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .page-title {
+            font-size: 20px;
+            font-weight: bold;
+        }
+        
+        .back-button {
+            padding: 8px 16px;
+            background-color: #f0f0f0;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .back-button:hover {
+            background-color: #e0e0e0;
+        }
+
+        /* 任务筛选器样式 */
+        .task-filters {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        
+        .task-filter {
+            padding: 8px 16px;
+            background-color: #f0f0f0;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        .task-filter.active {
+            background-color: #1890ff;
+            color: white;
+        }
+
+        /* 表格样式 */
+        .links-section {
+            background-color: white;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+        }
+        
+        .links-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 14px;
+        }
+        
+        .links-table th, .links-table td {
+            padding: 10px 12px;
+            text-align: left;
+            border-bottom: 1px solid #e8e8e8;
+        }
+        
+        .links-table th {
+            font-weight: bold;
+            background-color: #fafafa;
+            font-size: 13px;
+        }
+        
+        .tag-pill {
+            display: inline-block;
+            padding: 2px 10px;
+            border-radius: 12px;
+            font-size: 11px;
+            margin-right: 6px;
+        }
+        
+        .tag-pill.topic {
+            background-color: #e6f7ff;
+            color: #1890ff;
+        }
+        
+        .tag-pill.score.high-risk {
+            background-color: #fff1f0;
+            color: #f5222d;
+            border: 1px solid #ffa39e;
+        }
+        
+        .tag-pill.score.medium-risk {
+            background-color: #fff7e6;
+            color: #fa8c16;
+            border: 1px solid #ffd591;
+        }
+
+        /* 按钮样式 */
+        .table-button {
+            padding: 5px 10px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 12px;
+            transition: all 0.2s;
+        }
+        
+        .table-button.view-button {
+            background-color: #1890ff;
+            color: white;
+        }
+        
+        .table-button.view-button:hover {
+            background-color: #40a9ff;
+        }
+        
+        .table-button.deliver-button {
+            background-color: #f0f0f0;
+            color: #333;
+        }
+        
+        .table-button.deliver-button:hover {
+            background-color: #e0e0e0;
+        }
+        .tag-pill.nature { background-color: #f0f0f0; color: #666; }
+
+        /* 建议处理方式：强制单行显示 */
+        .links-table td:nth-child(7) {
+            white-space: nowrap;
+        }
+
+        /* 操作按钮容器显隐 */
+        .status-section { display: none; }
+        .status-section.active { display: block; }
+
+        /* 操作列统一布局 */
+        .table-actions { display: inline-flex; align-items: center; gap: 12px; white-space: nowrap; }
+
+        /* 状态链接色彩 */
+        .action-link.status-pending { color: #999; text-decoration: underline; cursor: default; }
+        .action-link.status-done    { color: #ff4d4f; text-decoration: underline; cursor: default; }
+
+        /* 统一超链接样式 */
+        .action-link {
+          color: #1890ff;
+          text-decoration: underline;
+          cursor: pointer;
+          background: none;
+          border: 0;
+          padding: 0;
+          font-size: 13px;
+          line-height: 1;
+        }
+        .action-link:hover { color: #40a9ff; }
+
+        /* 若页面仍有旧按钮，弱化其外观（可选） */
+        .action-btn, .table-button {
+          background: none !important;
+          border: 0 !important;
+          padding: 0 !important;
+          color: #1890ff !important;
+          text-decoration: underline !important;
+          font-size: 13px !important;
+        }
+
+        /* 操作区横向排列 */
+        .table-actions{display:inline-flex;align-items:center;gap:12px;white-space:nowrap}
+
+        /* 状态文本（非链接、不可点击） */
+        .status-text{font-size:13px;cursor:default}
+        .status-text.pending{color:#999}     /* 未完成-灰色 */
+        .status-text.done{color:#ff4d4f}     /* 已完成-红色 */
+
+        /* 让“开始处置”横排并不换行 */
+        .action-link { 
+          writing-mode: horizontal-tb;   /* 强制横排 */
+          white-space: nowrap;           /* 不换行 */
+          display: inline;               /* 保持行内，避免被压窄换行 */
+          letter-spacing: normal;        /* 取消可能的字间距影响 */
+        }
+
+        /* 如果只想作用于待处理里的“开始处置” */
+        #pending-section .action-link[data-action="to-processing"]{
+          writing-mode: horizontal-tb;
+          white-space: nowrap;
+          display: inline;
+        }
+
+        /* 已完成表格中的“重新处理”横向一行显示 */
+        #done-section .action-link[data-action="to-processing"]{
+          writing-mode: horizontal-tb;
+          white-space: nowrap;
+          display: inline-block;
+        }
+        .tag-pill.score.low-risk{
+          background-color:#f6ffed;
+          color:#52c41a;
+          border:1px solid #b7eb8f;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">舆情链接批量处理平台</div>
+            <div class="user-info">
+                <div class="user-avatar">A</div>
+                <div>管理员</div>
+            </div>
+        </header>
+
+        <div class="page-header">
+            <div class="page-title">任务管理列表</div>
+            <div class="back-button" id="back-to-page1">返回主页</div>
+        </div>
+        
+        <div class="task-filters">
+            <div class="task-filter">全部任务</div>
+            <div class="task-filter">待处理</div>
+            <div class="task-filter active">处理中</div>
+            <div class="task-filter">已完成</div>
+            <div class="task-filter">暂不处置</div>
+        </div>
+        
+        <!-- 待处理 -->
+        <div id="pending-section" class="status-section">
+            <div class="links-section">
+                <table class="links-table">
+                    <thead>
+                        <tr>
+                            <th width="28%">链接标题</th>
+                            <th width="10%">来源</th>
+                            <th width="12%">发布日期</th>
+                            <th width="12%">发布者</th>
+                            <th width="12%">内容归属</th>
+                            <th width="11%">风险类别</th>
+                            <th width="15%">建议处理方式</th>
+                            <th width="10%">操作</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="link-title">某企业新品资料疑似外泄引发担忧</td>
+                            <td class="link-source">微博</td>
+                            <td class="link-date">2025-09-16</td>
+                            <td class="link-publisher">科技日报</td>
+                            <td><span class="tag-pill topic">信息泄露</span></td>
+                            <td><span class="tag-pill score medium-risk">中风险</span></td>
+                            <td><span class="tag-pill nature">媒体沟通</span></td>
+                            <td><a class="action-link" data-action="to-processing">开始处置</a></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- 处理中（原有表格，用一个容器包裹并保持默认显示） -->
+        <div id="processing-section" class="status-section active">
+            <div class="links-section">
+                <table class="links-table" id="processing-table">
+                    <thead>
+                        <tr>
+                            <th width="28%">链接标题</th>
+                            <th width="10%">来源</th>
+                            <th width="12%">发布日期</th>
+                            <th width="12%">发布者</th>
+                            <th width="12%">内容归属</th>
+                            <th width="11%">风险类别</th>
+                            <th width="15%">建议处理方式</th>
+                            <th width="10%">操作</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!-- #processing-section tbody 内仅保留这四条 -->
+                        <tr>
+                            <td class="link-title">某企业售后服务态度差引发争议</td>
+                            <td class="link-source">小红书</td>
+                            <td class="link-date">2025-09-15</td>
+                            <td class="link-publisher">央视新闻</td>
+                            <td><span class="tag-pill topic">产品质量</span></td>
+                            <td><span class="tag-pill score high-risk">高风险</span></td>
+                            <td>
+                                <span class="tag-pill nature">媒体沟通</span>
+                                <span class="tag-pill nature">侵权</span>
+                                <span class="tag-pill nature">司法</span>
+                            </td>
+                            <td>
+                                <div class="table-actions">
+                                    <a class="action-link" href="editor1.html">查看</a>
+                                    <span class="status-text done">已完成</span>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="link-title">消费者投诉某企业虚假宣传问题</td>
+                            <td class="link-source">知乎</td>
+                            <td class="link-date">2025-09-14</td>
+                            <td class="link-publisher">人民日报</td>
+                            <td><span class="tag-pill topic">虚假宣传</span></td>
+                            <td><span class="tag-pill score medium-risk">中风险</span></td>
+                            <td><span class="tag-pill nature">司法</span></td>
+                            <td>
+                                <div class="table-actions">
+                                    <a class="action-link" href="editor1.html">查看</a>
+                                    <span class="status-text pending">未完成</span>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="link-title">某企业售后服务态度差引发争议</td>
+                            <td class="link-source">微博</td>
+                            <td class="link-date">2025-09-13</td>
+                            <td class="link-publisher">新华社</td>
+                            <td><span class="tag-pill topic">服务态度</span></td>
+                            <td><span class="tag-pill score medium-risk">中风险</span></td>
+                            <td><span class="tag-pill nature">媒体沟通</span></td>
+                            <td>
+                                <div class="table-actions">
+                                    <a class="action-link" href="editor1.html">查看</a>
+                                    <span class="status-text pending">未完成</span>
+                                </div>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="link-title">某企业产品质量问题引发消费者不满</td>
+                            <td class="link-source">微信公众号</td>
+                            <td class="link-date">2025-09-12</td>
+                            <td class="link-publisher">财经网</td>
+                            <td><span class="tag-pill topic">信息泄露</span></td>
+                            <td><span class="tag-pill score medium-risk">中风险</span></td>
+                            <td><span class="tag-pill nature">司法</span></td>
+                            <td>
+                                <div class="table-actions">
+                                    <a class="action-link" href="editor1.html">查看</a>
+                                    <span class="status-text pending">未完成</span>
+                                </div>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- 已完成（6条） -->
+        <div id="done-section" class="status-section">
+            <div class="links-section">
+                <table class="links-table">
+                    <thead>
+                        <tr>
+                            <th width="28%">链接标题</th>
+                            <th width="10%">来源</th>
+                            <th width="12%">发布日期</th>
+                            <th width="12%">发布者</th>
+                            <th width="12%">内容归属</th>
+                            <th width="11%">风险类别</th>
+                            <th width="15%">建议处理方式</th>
+                            <th width="10%">操作</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="link-title">某企业平台删除不实内容并提醒账号</td>
+                            <td class="link-source">知乎</td>
+                            <td class="link-date">2025-09-10</td>
+                            <td class="link-publisher">人民日报</td>
+                            <td><span class="tag-pill topic">虚假宣传</span></td>
+                            <td><span class="tag-pill score medium-risk">中风险</span></td>
+                            <td><span class="tag-pill nature">司法</span></td>
+                            <td><a class="action-link" data-action="to-processing">重新处置</a></td>
+                        </tr>
+                        <tr>
+                            <td class="link-title">某企业售后服务态度差引发争议</td>
+                            <td class="link-source">微博</td>
+                            <td class="link-date">2025-09-09</td>
+                            <td class="link-publisher">新华社</td>
+                            <td><span class="tag-pill topic">服务态度</span></td>
+                            <td><span class="tag-pill score medium-risk">中风险</span></td>
+                            <td><span class="tag-pill nature">媒体沟通</span></td>
+                            <td><a class="action-link" data-action="to-processing">重新处置</a></td>
+                        </tr>
+                        <tr>
+                            <td class="link-title">某企业侵权内容下架完毕</td>
+                            <td class="link-source">微信公众号</td>
+                            <td class="link-date">2025-09-09</td>
+                            <td class="link-publisher">财经网</td>
+                            <td><span class="tag-pill topic">信息泄露</span></td>
+                            <td><span class="tag-pill score medium-risk">中风险</span></td>
+                            <td><span class="tag-pill nature">司法</span></td>
+                            <td><a class="action-link" data-action="to-processing">重新处置</a></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- 已归档（1条） -->
+        <div id="archived-section" class="status-section">
+            <div class="links-section">
+                <table class="links-table">
+                    <thead>
+                        <tr>
+                            <th width="28%">链接标题</th>
+                            <th width="10%">来源</th>
+                            <th width="12%">发布日期</th>
+                            <th width="12%">发布者</th>
+                            <th width="12%">内容归属</th>
+                            <th width="11%">风险类别</th>
+                            <th width="15%">建议处理方式</th>
+                            <th width="10%">操作</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="link-title">阶段性处理完成，记录归档</td>
+                            <td class="link-source">微博</td>
+                            <td class="link-date">2025-09-06</td>
+                            <td class="link-publisher">新华网</td>
+                            <td><span class="tag-pill topic">服务态度</span></td>
+                            <td><span class="tag-pill score low-risk">低风险</span></td>
+                            <td><span class="tag-pill nature">媒体沟通</span></td>
+                            <td><a class="action-link" data-action="to-pending">取消归档</a></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- 重新处置 页面 -->
+        <div id="reprocess-section" class="status-section">
+          <div class="links-section">
+            <table class="links-table">
+              <thead>
+                <tr>
+                  <th width="28%">链接标题</th>
+                  <th width="10%">来源</th>
+                  <th width="12%">发布日期</th>
+                  <th width="12%">发布者</th>
+                  <th width="12%">内容归属</th>
+                  <th width="11%">风险类别</th>
+                  <th width="15%">建议处理方式</th>
+                  <th width="10%">操作</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td class="link-title">某企业价格说明不清引发消费者疑问</td>
+                  <td class="link-source">抖音</td>
+                  <td class="link-date">2025-09-08</td>
+                  <td class="link-publisher">消费者报道</td>
+                  <td><span class="tag-pill topic">价格争议</span></td>
+                  <td><span class="tag-pill score low-risk">低风险</span></td>
+                  <td><span class="tag-pill nature">媒体沟通</span></td>
+                  <td>
+                    <a class="action-link" data-action="to-processing">开始处置</a>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+    </div>
+
+    <script>
+        // 返回主页按钮功能
+        document.getElementById('back-to-page1').addEventListener('click', function() {
+            window.location.href = 'index.html';
+        });
+
+        // 任务筛选器功能
+        document.querySelectorAll('.task-filter').forEach(filter => {
+            filter.addEventListener('click', function() {
+                // 移除所有筛选器的active类
+                document.querySelectorAll('.task-filter').forEach(f => f.classList.remove('active'));
+                // 给当前点击的筛选器添加active类
+                this.classList.add('active');
+            });
+        });
+
+        // 页签切换：显示对应表格
+        (function bindTabs() {
+            const map = {
+                '全部任务': null,
+                '待处理': 'pending-section',
+                '处理中': 'processing-section',
+                '已完成': 'done-section',
+                '已归档': 'archived-section',
+                '暂不处置': 'reprocess-section'
+            };
+            const sections = document.querySelectorAll('.status-section');
+            document.querySelectorAll('.task-filter').forEach(el => {
+                el.addEventListener('click', function() {
+                    const text = this.textContent.trim();
+                    sections.forEach(s => s.classList.remove('active'));
+                    if (map[text]) {
+                        document.getElementById(map[text]).classList.add('active');
+                    } else {
+                        // 全部任务：默认显示处理中
+                        document.getElementById('processing-section').classList.add('active');
+                    }
+                });
+            });
+        })();
+
+        // 将行移入“处理中”时构建操作列（查看/未完成）
+        function buildProcessingOpsCell() {
+            const wrap = document.createElement('div');
+            wrap.className = 'table-actions';
+
+            const view = document.createElement('a');
+            view.className = 'action-link';
+            view.textContent = '查看';
+            view.href = 'editor1.html';
+
+            const status = document.createElement('span');
+            status.className = 'status-text pending';
+            status.textContent = '未完成';
+
+            wrap.appendChild(view);
+            wrap.appendChild(status);
+            return wrap;
+        }
+
+        // 通用：将一行从来源表移动到目标表
+        function moveRow(tr, targetTbody, toStatus) {
+            const clone = tr.cloneNode(true);
+            const opsTd = clone.lastElementChild;
+            opsTd.innerHTML = '';
+            if (toStatus === 'processing') {
+                // 处理中：操作为 查看/未完成
+                opsTd.appendChild(buildProcessingOpsCell());
+                document.querySelector('#processing-table tbody').appendChild(clone);
+            } else if (toStatus === 'pending') {
+                // 待处理：操作为 开始处置
+                const btn = document.createElement('a');
+                btn.className = 'action-link';
+                btn.textContent = '开始处置';
+                btn.dataset.action = 'to-processing';
+                opsTd.appendChild(btn);
+                targetTbody.appendChild(clone);
+            }
+            tr.remove();
+        }
+
+        // 动作按钮事件委托
+        document.addEventListener('click', function(e) {
+            const btn = e.target.closest('a[data-action]');
+            if (!btn) return;
+            const action = btn.dataset.action;
+            const tr = btn.closest('tr');
+            if (!tr) return;
+            if (action === 'to-processing') {
+                moveRow(tr, null, 'processing');
+                // 自动切到“处理中”方便查看
+                document.querySelectorAll('.task-filter').forEach(t => t.classList.remove('active'));
+                document.querySelector('.task-filter:nth-child(3)').classList.add('active'); // 第3个是“处理中”
+                document.querySelectorAll('.status-section').forEach(s => s.classList.remove('active'));
+                document.getElementById('processing-section').classList.add('active');
+            } else if (action === 'to-pending') {
+                const pendingTbody = document.querySelector('#pending-section tbody');
+                moveRow(tr, pendingTbody, 'pending');
+                // 切到“待处理”
+                document.querySelectorAll('.task-filter').forEach(t => t.classList.remove('active'));
+                document.querySelector('.task-filter:nth-child(2)').classList.add('active'); // 第2个是“待处理”
+                document.querySelectorAll('.status-section').forEach(s => s.classList.remove('active'));
+                document.getElementById('pending-section').classList.add('active');
+            }
+        });
+    </script>
+</body>
+</html>

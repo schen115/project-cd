@@ -1,0 +1,1325 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>侵权投诉处置 - 舆情链接批量处理平台</title>
+    <style>
+        /* 保留原有样式 */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "PingFang SC", "Microsoft YaHei", sans-serif;
+        }
+        
+        body {
+            background-color: #f5f7fa;
+            color: #333;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 0;
+            border-bottom: 1px solid #e8e8e8;
+            margin-bottom: 20px;
+        }
+        
+        .logo {
+            font-size: 20px;
+            font-weight: bold;
+            color: #1890ff;
+        }
+        
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .user-avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background-color: #1890ff;
+            color: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-weight: bold;
+        }
+        
+        .page-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        
+        .page-title {
+            font-size: 24px;
+            font-weight: bold;
+        }
+        
+        .back-button {
+            padding: 8px 16px;
+            background-color: #f0f0f0;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .back-button:hover {
+            background-color: #e0e0e0;
+        }
+        
+        /* 编辑器标签页样式 */
+        .editor-tabs {
+            display: flex;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #e8e8e8;
+        }
+        
+        .editor-tab {
+            padding: 12px 24px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: all 0.3s;
+            border-bottom: 2px solid transparent;
+            color: #666;
+        }
+        
+        .editor-tab.active {
+            color: #1890ff;
+            border-bottom-color: #1890ff;
+            font-weight: bold;
+        }
+        
+        /* 左右分区布局 */
+        .split-editor-container {
+            display: flex;
+            gap: 20px;
+            height: 100%;
+        }
+        
+        .left-panel {
+            flex: 1;
+            overflow-y: auto;
+            max-height: 700px;
+        }
+        
+        .right-panel {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            border: 1px solid #e8e8e8;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+        
+        /* 侵权点卡片样式 */
+        .infringement-points-container {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+            margin-bottom: 20px;
+        }
+        
+        .infringement-card {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            overflow: hidden;
+            border: 1px solid #e8e8e8;
+        }
+        
+        .infringement-card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px;
+            background-color: #f5f7fa;
+            border-bottom: 1px solid #e8e8e8;
+        }
+        
+        .infringement-card-title {
+            font-size: 16px;
+            font-weight: bold;
+            color: #333;
+            margin: 0;
+        }
+        
+        .delete-button {
+            padding: 5px 10px;
+            background-color: #ff4d4f;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .delete-button:hover {
+            background-color: #ff7875;
+        }
+        
+        .infringement-card-content {
+            padding: 15px;
+        }
+        
+        .form-group {
+            margin-bottom: 15px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #666;
+        }
+        
+        .info-textarea {
+            width: 100%;
+            min-height: 120px;
+            padding: 10px;
+            border: 1px solid #d9d9d9;
+            border-radius: 4px;
+            resize: vertical;
+            font-size: 14px;
+            line-height: 1.5;
+            background-color: #fff;
+        }
+        
+        .save-btn {
+            display: inline-block;
+            margin-top: 10px;
+            padding: 5px 15px;
+            background-color: #f0f0f0;
+            border: 1px solid #d9d9d9;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            color: #666;
+            transition: all 0.3s;
+        }
+        
+        .save-btn:hover {
+            background-color: #e6f7ff;
+            border-color: #1890ff;
+            color: #1890ff;
+        }
+        
+        .save-btn.saved {
+            background-color: #f6ffed;
+            border-color: #b7eb8f;
+            color: #52c41a;
+        }
+        
+        .add-infringement-btn {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 20px;
+            background-color: #1890ff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: all 0.3s;
+            width: 100%;
+        }
+        
+        .add-infringement-btn:hover {
+            background-color: #40a9ff;
+        }
+        
+        /* AI生成按钮 */
+        .ai-generate-btn {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 12px 20px;
+            background-color: #1890ff;
+            color: white;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            transition: all 0.3s;
+            margin-top: 20px;
+        }
+        
+        .ai-generate-btn:hover {
+            background-color: #40a9ff;
+        }
+        
+        /* 右侧空状态 */
+        .empty-state {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100%;
+            color: #999;
+        }
+        
+        .empty-text {
+            font-size: 16px;
+        }
+        
+        /* 函件内容样式 */
+        .letter-container {
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .letter-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 15px;
+            background-color: #f5f7fa;
+            border-bottom: 1px solid #e8e8e8;
+        }
+        
+        .letter-title {
+            font-size: 16px;
+            font-weight: bold;
+            color: #333;
+        }
+        
+        .letter-actions {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .letter-action {
+            padding: 5px 10px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .letter-action:hover {
+            background-color: #e6f7ff;
+            color: #1890ff;
+        }
+        
+        .letter-content {
+            flex: 1;
+            padding: 15px;
+        }
+        
+        .letter-textarea {
+            width: 100%;
+            height: 100%;
+            min-height: 500px;
+            padding: 15px;
+            border: 1px solid #d9d9d9;
+            border-radius: 4px;
+            resize: none;
+            font-size: 14px;
+            line-height: 1.8;
+        }
+        
+        /* 审核状态样式 */
+        .review-status {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 15px;
+            background-color: #fffbe6;
+            border-top: 1px solid #e8e8e8;
+        }
+        
+        .status-pending {
+            color: #fa8c16;
+        }
+        
+        .status-approved {
+            color: #52c41a;
+        }
+        
+        /* 弹窗样式 */
+        .modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.5);
+            z-index: 1000;
+            display: none;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .modal-content {
+            background-color: white;
+            border-radius: 8px;
+            padding: 30px;
+            width: 400px;
+            max-width: 90%;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+        }
+        
+        .modal-title {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            color: #333;
+        }
+        
+        .modal-body {
+            margin-bottom: 20px;
+        }
+        
+        .token-info {
+            background-color: #f5f7fa;
+            border-radius: 4px;
+            padding: 15px;
+            margin: 15px 0;
+        }
+        
+        .token-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+        
+        .token-item:last-child {
+            margin-bottom: 0;
+        }
+        
+        .token-label {
+            font-weight: normal;
+            color: #666;
+        }
+        
+        .token-value {
+            font-weight: normal;
+            color: #1890ff;
+        }
+        
+        .modal-footer {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+        }
+        
+        .cancel-button {
+            padding: 8px 16px;
+            background-color: white;
+            border: 1px solid #d9d9d9;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .cancel-button:hover {
+            background-color: #f0f0f0;
+        }
+        
+        .confirm-button {
+            padding: 8px 16px;
+            background-color: #1890ff;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .confirm-button:hover {
+            background-color: #40a9ff;
+        }
+
+        /* 添加按钮底部容器样式 */
+        .letter-bottom-actions {
+            display: flex;
+            justify-content: flex-end;
+            gap: 10px;
+            padding: 15px;
+            border-top: 1px solid #e8e8e8;
+            background-color: #f9f9f9;
+        }
+        
+        /* 按钮样式，参考editor1.html */
+        .letter-action {
+            padding: 8px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s;
+            background-color: #f0f0f0;
+            color: #666;
+            border: 1px solid #d9d9d9;
+        }
+        
+        /* 按钮悬停效果，参考editor1.html */
+        .letter-action:hover {
+            background-color: #1890ff !important;
+            color: white !important;
+            border-color: #1890ff !important;
+        }
+
+        /* 修改标签页样式，使其与图片一致 */
+        .editor-tabs {
+            display: flex;
+            margin-bottom: 20px;
+            border-bottom: 1px solid #e8e8e8;
+        }
+        
+        .editor-tab {
+            padding: 12px 24px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: all 0.3s;
+            border-bottom: 2px solid transparent;
+            color: #666;
+        }
+        
+        .editor-tab.active {
+            color: #1890ff;
+            border-bottom-color: #1890ff;
+            font-weight: bold;
+        }
+        
+        /* 页面标题样式 */
+        .page-title {
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        /* 新增样式 */
+        .basic-info-section {
+            background-color: #f5f7fa;
+            border: 1px solid #e8e8e8;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .section-title {
+            font-size: 18px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 15px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #e8e8e8;
+        }
+
+        .info-input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #d9d9d9;
+            border-radius: 4px;
+            font-size: 14px;
+            line-height: 1.5;
+            background-color: #fff;
+        }
+
+        /* 基本信息部分样式 */
+        .basic-info-section {
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            padding: 15px;
+            margin-bottom: 20px;
+            border: 1px solid #e8e8e8;
+        }
+        
+        .section-title {
+            font-size: 16px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            color: #333;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        
+        .info-input {
+            width: 100%;
+            padding: 8px 10px;
+            border: 1px solid #d9d9d9;
+            border-radius: 4px;
+            font-size: 14px;
+            line-height: 1.5;
+            margin-bottom: 5px;
+        }
+        
+        .info-input:focus {
+            border-color: #40a9ff;
+            box-shadow: 0 0 0 2px rgba(24, 144, 255, 0.2);
+            outline: none;
+        }
+
+        /* 保存按钮样式 */
+        .save-button {
+            padding: 5px 10px;
+            background-color: #52c41a;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .save-button:hover {
+            background-color: #73d13d;
+        }
+
+        /* 新增样式 */
+        .checkbox-container {
+            display: flex;
+            align-items: center;
+            margin-bottom: 5px;
+            cursor: pointer;
+        }
+        
+        .checkbox-label {
+            margin-left: 8px;
+            font-weight: bold;
+        }
+        
+        .option-description {
+            margin-left: 24px;
+            font-size: 13px;
+            color: #666;
+            margin-top: 2px;
+        }
+        
+        /* 状态提示样式 */
+        .status-indicator {
+            display: flex;
+            align-items: center;
+            padding: 15px;
+            background-color: #f6ffed;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+        
+        .status-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: #f6ffed;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-right: 15px;
+            border: 1px solid #b7eb8f;
+        }
+        
+        .status-icon i {
+            color: #52c41a;
+            font-size: 20px;
+        }
+        
+        .status-text {
+            color: #333;
+        }
+
+        /* 新增主标题样式 */
+        .section-main-title {
+            font-size: 18px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #e8e8e8;
+        }
+        
+        /* 移除原有的platform-header样式，因为它不再需要 */
+        #platform-complaint-section .platform-header,
+        #cyber-complaint-section .platform-header {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <div class="logo">舆情链接批量处理平台</div>
+            <div class="user-info">
+                <div class="user-avatar">A</div>
+                <div>管理员</div>
+            </div>
+        </header>
+        
+        <!-- 修改页面标题 -->
+        <div class="page-header">
+            <div class="page-title">舆情处理</div>
+            <div class="back-button" id="back-to-tasks">返回任务列表</div>
+        </div>
+
+        <!-- 修改编辑器标签页，添加三个选项 -->
+        <div class="editor-tabs">
+            <div class="editor-tab" data-tab="communication">媒体沟通</div>
+            <div class="editor-tab active" data-tab="infringement">侵权</div>
+            <div class="editor-tab" data-tab="legal">司法</div>
+        </div>
+        
+        <!-- 添加处置方式选择弹窗 -->
+        <div class="modal" id="treatment-modal" style="display: flex;">
+            <div class="modal-content">
+                <div class="modal-title">选择处置方式</div>
+                <div class="modal-body">
+                    <p style="margin-bottom: 15px;">请选择您需要的侵权处置方式：</p>
+                    <div style="margin-bottom: 20px;">
+                        <label class="checkbox-container">
+                            <input type="checkbox" id="platform-complaint" checked>
+                            <span class="checkbox-label">平台投诉处置</span>
+                        </label>
+                        <p class="option-description">向内容发布平台直接提交侵权投诉</p>
+                    </div>
+                    <div style="margin-bottom: 20px;">
+                        <label class="checkbox-container">
+                            <input type="checkbox" id="cyber-complaint" checked>
+                            <span class="checkbox-label">网信办涉企侵权投诉</span>
+                        </label>
+                        <p class="option-description">向中央网信办提交涉企侵权投诉函</p>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <div class="confirm-button" id="confirm-treatment">确认</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 内容区域 -->
+        <div class="split-editor-container">
+            <!-- 左侧区域 -->
+            <div class="left-panel">
+                <div id="infringement-view">
+                    <!-- 修改后的平台投诉部分 -->
+                    <div id="platform-complaint-section">
+                        <h2 class="section-main-title">平台投诉处置反馈</h2>
+                        
+                        <!-- 状态提示 -->
+                        <div class="status-indicator">
+                            <div class="status-icon">
+                                <i class="fas fa-check"></i>
+                            </div>
+                            <div class="status-text">
+                                已提交平台投诉处置处理，平台正在审核中，我们将及时为您反馈处理结果。
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- 修改后的网信办投诉部分 -->
+                    <div id="cyber-complaint-section" style="display: none;">
+                        <h2 class="section-main-title">中央网信办涉企侵权投诉</h2>
+                        
+                        <!-- 投诉基本信息卡片 -->
+                        <div class="infringement-card">
+                            <div class="infringement-card-header">
+                                <h3 class="infringement-card-title">投诉基本信息</h3>
+                            </div>
+                            <div class="infringement-card-content">
+                                <div class="form-group">
+                                    <label>投诉对象（平台/账号名称）：</label>
+                                    <input type="text" class="info-input" id="complaint-target" value="车联中国" placeholder="请输入投诉对象名称...">
+                                </div>
+                                <div class="form-group">
+                                    <label>涉及报道标题：</label>
+                                    <input type="text" class="info-input" id="article-title" value="《不敢相信，宝马在无锡膏腴之地都快活不下去了》" placeholder="请输入报道标题...">
+                                </div>
+                                <div class="form-group">
+                                    <label>内容链接：</label>
+                                    <input type="text" class="info-input" id="content-link" value="www.123.com" placeholder="请输入内容链接...">
+                                </div>
+                                <button class="save-btn" id="save-basic-info">保存</button>
+                            </div>
+                        </div>
+                        
+                        <!-- 侵权点管理区域 -->
+                        <div class="infringement-points-container">
+                            <!-- 侵权点卡片 #1 -->
+                            <div class="infringement-card">
+                                <div class="infringement-card-header">
+                                    <h3 class="infringement-card-title">侵权点 #1</h3>
+                                    <button class="delete-button">删除</button>
+                                </div>
+                                <div class="infringement-card-content">
+                                    <div class="form-group">
+                                        <label>侵权点描述：</label>
+                                        <textarea class="info-textarea" placeholder="请输入侵权点描述...">在未获得授权的情况下使用我公司注册商标</textarea>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>对应法律条文：</label>
+                                        <textarea class="info-textarea" placeholder="请输入对应法律条文...">依据《规范》第十条，需提交宝马（中国）汽车贸易有限公司 2025 年上半年官方销量公告，证明数据来源及准确性。</textarea>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>企业补充事实（选填）：</label>
+                                        <textarea class="info-textarea" placeholder="请输入企业补充事实（选填）..."></textarea>
+                                    </div>
+                                    <button class="save-btn">保存</button>
+                                </div>
+                            </div>
+                            
+                            <!-- 侵权点卡片 #2 -->
+                            <div class="infringement-card">
+                                <div class="infringement-card-header">
+                                    <h3 class="infringement-card-title">侵权点 #2</h3>
+                                    <button class="delete-button">删除</button>
+                                </div>
+                                <div class="infringement-card-content">
+                                    <div class="form-group">
+                                        <label>侵权点描述：</label>
+                                        <textarea class="info-textarea" placeholder="请输入侵权点描述...">盗用我公司产品图片进行商业推广</textarea>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>对应法律条文：</label>
+                                        <textarea class="info-textarea" placeholder="请输入对应法律条文...">依据《规范》第十二条，需提交宝马（中国）汽车贸易有限公司官方品牌声明，证明上述表述与企业实际经营战略不符。</textarea>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>企业补充事实（选填）：</label>
+                                        <textarea class="info-textarea" placeholder="请输入企业补充事实（选填）..."></textarea>
+                                    </div>
+                                    <button class="save-btn">保存</button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- 添加侵权点按钮 -->
+                        <button class="add-infringement-btn" id="add-infringement-btn">
+                            <i class="fas fa-plus"></i> 添加侵权点卡片
+                        </button>
+                        
+                        <!-- 生成网信办函件按钮 -->
+                        <div class="ai-generate-btn" style="background-color: #fa8c16; margin-top: 30px;" id="ai-generate-cyber-btn">
+                            <span>一键生成网信办投诉函</span>
+                        </div>
+                        <!-- 已完成处置（绿色按钮） -->
+                        <div id="complete-disposal-cyber-btn"
+                        style="margin-top:12px; background-color:#52c41a; color:#fff; border-radius:8px;
+                            padding:14px 20px; text-align:center; font-weight:bold; cursor:pointer;">
+                        已完成处置
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 右侧区域：函件内容 -->
+            <div class="right-panel">
+                <!-- 初始空状态 -->
+                <div class="empty-state" id="letter-empty-state">
+                    <div class="empty-text">点击左侧"一键生成网信办投诉函"按钮生成投诉函件</div>
+                </div>
+                
+                <!-- 网信办投诉函 -->
+                <div class="letter-container" id="cyber-letter" style="display: none;">
+                    <div class="letter-header">
+                        <div class="letter-title">投诉函内容</div>
+                    </div>
+                    <div class="letter-content">
+                        <textarea class="letter-textarea" id="infringement-letter-cyber"></textarea>
+                    </div>
+                    <div class="letter-bottom-actions">
+                        <div class="letter-action" id="save-letter-cyber">保存</div>
+                        <div class="letter-action" id="download-letter-cyber">下载</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 费用提醒弹窗
+    <div class="modal" id="cost-reminder-modal">
+        <div class="modal-content">
+            <div class="modal-title">生成网信办投诉函</div>
+            <div class="modal-body">
+                <div style="text-align: center; margin-bottom: 15px;">
+                    <i class="fas fa-file-invoice" style="font-size: 36px; color: #1890ff; margin-bottom: 10px;"></i>
+                    <h3 style="font-size: 18px; margin-bottom: 10px;">按次收费服务</h3>
+                </div>
+                <p style="margin-bottom: 15px; text-align: center; color: #333;">制作网信办投诉函需要收取服务费，详情如下：</p>
+                <div class="token-info" style="background-color: #f9f9f9; border: 1px solid #eee; border-radius: 8px;">
+                    <div class="token-item" style="border-top: 1px dashed #eee; padding-top: 10px; margin-top: 10px;">
+                        <div class="token-label">应付金额：</div>
+                        <div class="token-value" style="color: #1890ff;">1000积分</div>
+                    </div>
+                </div>
+                <p style="font-size: 13px; color: #666; margin-top: 15px; text-align: center;">
+                    <i class="fas fa-info-circle" style="margin-right: 5px;"></i>
+                    费用将从您的账户余额中扣除，生成后可立即下载使用
+                </p>
+            </div>
+            <div class="modal-footer">
+                <div class="cancel-button" id="cancel-cost">取消</div>
+                <div class="confirm-button" id="confirm-cost">确认支付</div>
+            </div>
+        </div>
+    </div> -->
+<!-- 添加确认弹窗HTML结构 -->
+<div class="confirm-modal" id="confirm-modal" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background-color: rgba(0, 0, 0, 0.5); z-index: 1000; display: none; justify-content: center; align-items: center; backdrop-filter: blur(5px);">
+    <div class="confirm-modal-content" style="background-color: white; border-radius: 12px; width: 380px; box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);">
+        <div class="confirm-modal-title" style="font-size: 20px; font-weight: bold; text-align: center; padding: 20px 0 14px; color: #333;">
+            生成网信办投诉函
+        </div>
+        <div class="confirm-modal-info" style="padding: 0 25px 15px;">
+            <p style="margin-bottom: 12px; text-align: center; color: #333; font-size: 13px;">制作网信办投诉函需要按次收取服务费，详情如下：</p>
+            <div style="background-color: #f9f9f9; border: 1px solid #eee; border-radius: 8px; padding: 15px;">
+                <div class="confirm-modal-info-item" style="display: flex; justify-content: space-between; margin-bottom: 5px;">
+                    <div class="confirm-modal-info-label" style="color: #666;">应付金额：</div>
+                    <div class="confirm-modal-info-value" style="color: #1890ff; font-weight: bold;">1000积分</div>
+                </div>
+            </div>
+            <p style="font-size: 12px; color: #666; margin-top: 12px; text-align: center;">
+                <i class="fas fa-info-circle" style="margin-right: 5px;"></i>
+                费用将从您的账户余额中扣除，生成后可立即下载使用
+            </p>
+        </div>
+        <div class="confirm-modal-actions" style="display: flex; justify-content: center; gap: 15px; padding: 0 25px 20px;">
+            <button class="confirm-modal-button" id="confirm-cancel" style="padding: 8px 20px; background-color: #f0f0f0; border: 1px solid #d9d9d9; border-radius: 4px; cursor: pointer; font-size: 14px; color: #666;">取消</button>
+            <button class="confirm-modal-button" id="confirm-proceed" style="padding: 8px 20px; background-color: #1890ff; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 14px;">确认支付</button>
+        </div>
+    </div>
+</div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // 侵权点计数器
+            let infringementCounter = 2; // 已经有两个默认侵权点
+            
+            // 添加侵权点按钮
+            const addInfringementBtn = document.getElementById('add-infringement-btn');
+            if (addInfringementBtn) {
+                addInfringementBtn.addEventListener('click', function() {
+                    infringementCounter++;
+                    const newCard = createInfringementCard(infringementCounter);
+                    
+                    // 插入到容器中
+                    const container = document.querySelector('.infringement-points-container');
+                    container.appendChild(newCard);
+                    
+                    // 绑定事件
+                    bindCardEvents(newCard);
+                });
+            }
+            
+            // 为现有卡片绑定事件
+            document.querySelectorAll('.infringement-card').forEach(bindCardEvents);
+            
+            // 生成网信办投诉函按钮
+            const generateCyberBtn = document.getElementById('ai-generate-cyber-btn');
+            if (generateCyberBtn) {
+                generateCyberBtn.addEventListener('click', function() {
+                    // 显示确认弹窗
+                    const confirmModal = document.getElementById('confirm-modal');
+                    if (confirmModal) {
+                        confirmModal.style.display = 'flex';
+                    }
+                });
+            }
+            
+            // 确认支付按钮
+            const confirmProceedBtn = document.getElementById('confirm-proceed');
+            if (confirmProceedBtn) {
+                confirmProceedBtn.addEventListener('click', function() {
+                    // 隐藏确认弹窗
+                    const confirmModal = document.getElementById('confirm-modal');
+                    if (confirmModal) {
+                        confirmModal.style.display = 'none';
+                    }
+                    
+                    // 显示右侧面板
+                    const rightPanel = document.querySelector('.right-panel');
+                    if (rightPanel) {
+                        rightPanel.style.display = 'flex';
+                    }
+                    
+                    // 隐藏空状态，显示函件内容
+                    const emptyState = document.getElementById('letter-empty-state');
+                    const cyberLetter = document.getElementById('cyber-letter');
+                    
+                    if (emptyState && cyberLetter) {
+                        emptyState.style.display = 'none';
+                        cyberLetter.style.display = 'flex';
+                    }
+                    
+                    // 生成函件内容
+                    const letterTextarea = document.getElementById('infringement-letter-cyber');
+                    if (letterTextarea) {
+                        letterTextarea.value = '正在生成中，请稍候...';
+                        
+                        // 获取基本信息
+                        const complaintTarget = document.getElementById('complaint-target').value || '[投诉对象]';
+                        const articleTitle = document.getElementById('article-title').value || '[报道标题]';
+                        const contentLink = document.getElementById('content-link').value || '[内容链接]';
+                        
+                        // 收集所有侵权点信息
+                        const infringementPoints = [];
+                        document.querySelectorAll('.infringement-card').forEach(card => {
+                            const textareas = card.querySelectorAll('.info-textarea');
+                            if (textareas.length >= 3) {
+                                infringementPoints.push({
+                                    description: textareas[0].value,
+                                    law: textareas[1].value,
+                                    facts: textareas[2].value
+                                });
+                            }
+                        });
+                        
+                        // 模拟AI生成延迟
+                        setTimeout(() => {
+                            // 根据收集的侵权点生成投诉函
+                            let generatedLetter = `关于网络侵权行为的投诉函
+
+致国家互联网信息办公室：
+
+我公司（[公司名称]）现就${complaintTarget}平台上存在的侵犯我公司合法权益的行为，向贵单位进行投诉。
+
+一、基本情况
+近期，我公司发现在"${articleTitle}"（链接：${contentLink}）中存在多处侵犯我公司知识产权的内容，具体侵权情况如下：
+
+`;
+
+                            // 添加侵权点描述
+                            infringementPoints.forEach((point, index) => {
+                                generatedLetter += `侵权点${index + 1}：${point.description}\n`;
+                                if (point.law) {
+                                    generatedLetter += `法律依据：${point.law}\n`;
+                                }
+                                if (point.facts) {
+                                    generatedLetter += `补充事实：${point.facts}\n`;
+                                }
+                                generatedLetter += '\n';
+                            });
+
+                            generatedLetter += `
+二、处理情况
+我公司已就上述侵权行为向相关平台提交投诉，但截至本函发出时，部分侵权内容仍未得到有效处理，侵权行为仍在继续，给我公司造成了严重的经济损失和品牌损害。
+
+三、请求事项
+1. 请贵单位督促${complaintTarget}平台立即处理侵权内容，删除侵权信息，封禁侵权账号。
+2. 对相关平台的知识产权保护工作进行监督检查。
+3. 对恶意侵权行为进行查处，维护正常的网络经营秩序。
+4. 协调相关部门为我公司维权提供必要支持。
+
+我公司已准备好相关证据材料，愿意配合贵单位的调查工作。恳请贵单位重视此事，依法处理。
+
+联系人：[姓名]
+联系电话：[电话]
+电子邮箱：[邮箱]
+
+[公司名称]（盖章）
+[日期]`;
+
+                            letterTextarea.value = generatedLetter;
+                        }, 2000);
+                    }
+                });
+            }
+            
+            // 取消按钮
+            const confirmCancelBtn = document.getElementById('confirm-cancel');
+            if (confirmCancelBtn) {
+                confirmCancelBtn.addEventListener('click', function() {
+                    const confirmModal = document.getElementById('confirm-modal');
+                    if (confirmModal) {
+                        confirmModal.style.display = 'none';
+                    }
+                });
+            }
+            
+            // 创建新的侵权点卡片
+            function createInfringementCard(index) {
+                const card = document.createElement('div');
+                card.className = 'infringement-card';
+                card.innerHTML = `
+                    <div class="infringement-card-header">
+                        <h3 class="infringement-card-title">侵权点 #${index}</h3>
+                        <button class="delete-button">删除</button>
+                    </div>
+                    <div class="infringement-card-content">
+                        <div class="form-group">
+                            <label>侵权点描述：</label>
+                            <textarea class="info-textarea" placeholder="请输入侵权点描述..."></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>对应法律条文：</label>
+                            <textarea class="info-textarea" placeholder="请输入对应法律条文..."></textarea>
+                        </div>
+                        <div class="form-group">
+                            <label>企业补充事实（选填）：</label>
+                            <textarea class="info-textarea" placeholder="请输入企业补充事实（选填）..."></textarea>
+                        </div>
+                        <button class="save-btn">保存</button>
+                    </div>
+                `;
+                return card;
+            }
+            
+            // 绑定卡片事件
+            function bindCardEvents(card) {
+                // 删除按钮
+                const deleteBtn = card.querySelector('.delete-button');
+                if (deleteBtn) {
+                    deleteBtn.addEventListener('click', function() {
+                        if (confirm('确定要删除这个侵权点吗？')) {
+                            card.remove();
+                        }
+                    });
+                }
+                
+                // 保存按钮
+                const saveBtn = card.querySelector('.save-btn');
+                if (saveBtn) {
+                    saveBtn.addEventListener('click', function() {
+                        this.classList.add('saved');
+                        this.textContent = '已保存';
+                        
+                        setTimeout(() => {
+                            this.classList.remove('saved');
+                            this.textContent = '保存';
+                        }, 2000);
+                    });
+                }
+            }
+            
+            // 费用提醒弹窗确认按钮
+            const confirmCostBtn = document.getElementById('confirm-cost');
+            if (confirmCostBtn) {
+                confirmCostBtn.addEventListener('click', function() {
+                    // 关闭费用提醒弹窗
+                    const costReminderModal = document.getElementById('cost-reminder-modal');
+                    if (costReminderModal) {
+                        costReminderModal.style.display = 'none';
+                    }
+                });
+            }
+            
+            // 取消费用提醒弹窗
+            const cancelCostBtn = document.getElementById('cancel-cost');
+            if (cancelCostBtn) {
+                cancelCostBtn.addEventListener('click', function() {
+                    const costReminderModal = document.getElementById('cost-reminder-modal');
+                    if (costReminderModal) {
+                        costReminderModal.style.display = 'none';
+                    }
+                });
+            }
+            
+            // 保存函件内容
+            const saveLetterCyber = document.getElementById('save-letter-cyber');
+            if (saveLetterCyber) {
+                saveLetterCyber.addEventListener('click', function() {
+                    const letterTextarea = document.getElementById('infringement-letter-cyber');
+                    if (letterTextarea) {
+                        // 显示保存成功提示
+                        const originalText = this.textContent;
+                        this.textContent = '已保存';
+                        
+                        setTimeout(() => {
+                            this.textContent = originalText;
+                        }, 2000);
+                    }
+                });
+            }
+            
+            // 下载函件内容
+            const downloadLetterCyber = document.getElementById('download-letter-cyber');
+            if (downloadLetterCyber) {
+                downloadLetterCyber.addEventListener('click', function() {
+                    const letterTextarea = document.getElementById('infringement-letter-cyber');
+                    if (letterTextarea && letterTextarea.value) {
+                        // 创建Blob对象
+                        const blob = new Blob([letterTextarea.value], { type: 'text/plain;charset=utf-8' });
+                        
+                        // 创建下载链接
+                        const url = URL.createObjectURL(blob);
+                        const a = document.createElement('a');
+                        a.href = url;
+                        a.download = '网信办投诉函_' + new Date().toISOString().slice(0, 10) + '.txt';
+                        
+                        // 触发下载
+                        document.body.appendChild(a);
+                        a.click();
+                        
+                        // 清理
+                        setTimeout(() => {
+                            document.body.removeChild(a);
+                            URL.revokeObjectURL(url);
+                        }, 0);
+                        
+                        // 显示下载成功提示
+                        const originalText = this.textContent;
+                        this.textContent = '已下载';
+                        
+                        setTimeout(() => {
+                            this.textContent = originalText;
+                        }, 2000);
+                    }
+                });
+            }
+            
+            // 返回任务列表按钮
+            const backToTasksBtn = document.getElementById('back-to-tasks');
+            if (backToTasksBtn) {
+                backToTasksBtn.addEventListener('click', function() {
+                    if (confirm('确定要返回任务列表吗？未保存的内容将会丢失。')) {
+                        window.location.href = 'task_mag.html';
+                    }
+                });
+            }
+
+            // “已完成处置” -> 弹确认后跳回任务管理列表（兼容两种 id）
+            ['complete-disposal-btn', 'complete-disposal-cyber-btn'].forEach(id => {
+            const btn = document.getElementById(id);
+            if (btn) {
+                btn.addEventListener('click', function () {
+                if (confirm('确认已完成处置？')) {
+                    window.location.href = 'task_mag.html';
+                }
+                });
+            }
+            });
+            
+            // 标签页切换逻辑
+            const tabs = document.querySelectorAll('.editor-tab');
+            if (tabs.length) {
+                tabs.forEach(tab => {
+                    tab.addEventListener('click', function() {
+                        // 移除所有标签页的active类
+                        tabs.forEach(t => t.classList.remove('active'));
+                        
+                        // 给当前标签页添加active类
+                        this.classList.add('active');
+                        
+                        // 这里可以添加显示对应内容区域的逻辑
+                        // 暂时不执行任何操作，只是切换样式
+                    });
+                });
+            }
+            
+            // 添加FontAwesome图标支持
+            function loadFontAwesome() {
+                const link = document.createElement('link');
+                link.rel = 'stylesheet';
+                link.href = 'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css';
+                document.head.appendChild(link);
+            }
+            
+            loadFontAwesome();
+
+            // 投诉基本信息保存按钮
+            const saveBasicInfoBtn = document.getElementById('save-basic-info');
+            if (saveBasicInfoBtn) {
+                saveBasicInfoBtn.addEventListener('click', function() {
+                    // 显示保存成功提示
+                    const originalText = this.textContent;
+                    this.textContent = '已保存';
+                    this.classList.add('saved');
+                    
+                    setTimeout(() => {
+                        this.textContent = originalText;
+                        this.classList.remove('saved');
+                    }, 2000);
+                });
+            }
+
+            // 平台投诉信息保存按钮
+            const savePlatformInfoBtn = document.getElementById('save-platform-info');
+            if (savePlatformInfoBtn) {
+                savePlatformInfoBtn.addEventListener('click', function() {
+                    // 显示保存成功提示
+                    const originalText = this.textContent;
+                    this.textContent = '已保存';
+                    this.classList.add('saved');
+                    
+                    setTimeout(() => {
+                        this.textContent = originalText;
+                        this.classList.remove('saved');
+                    }, 2000);
+                });
+            }
+
+            // 处置方式选择弹窗确认按钮
+            const treatmentModal = document.getElementById('treatment-modal');
+            const platformComplaintCheckbox = document.getElementById('platform-complaint');
+            const cyberComplaintCheckbox = document.getElementById('cyber-complaint');
+            const confirmTreatmentBtn = document.getElementById('confirm-treatment');
+            
+            const platformSection = document.getElementById('platform-complaint-section');
+            const cyberSection = document.getElementById('cyber-complaint-section');
+            
+            // 确认处置方式按钮点击事件
+            if (confirmTreatmentBtn) {
+                confirmTreatmentBtn.addEventListener('click', function() {
+                    // 隐藏弹窗
+                    treatmentModal.style.display = 'none';
+                    
+                    // 根据选择显示/隐藏相应部分
+                    if (platformComplaintCheckbox && cyberComplaintCheckbox) {
+                        platformSection.style.display = platformComplaintCheckbox.checked ? 'block' : 'none';
+                        cyberSection.style.display = cyberComplaintCheckbox.checked ? 'block' : 'none';
+                        
+                        // 如果两个都选中，平台投诉在上，网信办投诉在下
+                        if (platformComplaintCheckbox.checked && cyberComplaintCheckbox.checked) {
+                            platformSection.style.marginBottom = '30px';
+                        }
+                        
+                        // 如果选择了网信办涉企侵权投诉，显示右侧面板
+                        const rightPanel = document.querySelector('.right-panel');
+                        if (rightPanel) {
+                            if (cyberComplaintCheckbox.checked) {
+                                rightPanel.style.display = 'flex';
+                            } else {
+                                rightPanel.style.display = 'none';
+                            }
+                        }
+                    }
+                });
+            }
+            
+            // 页面加载时默认显示处置方式弹窗
+            if (treatmentModal) {
+                treatmentModal.style.display = 'flex';
+                
+                // 初始状态下隐藏平台投诉处置反馈和网信办投诉部分
+                if (platformSection) {
+                    platformSection.style.display = 'none';
+                }
+                if (cyberSection) {
+                    cyberSection.style.display = 'none';
+                }
+                
+                // 隐藏右侧面板内容
+                const rightPanel = document.querySelector('.right-panel');
+                if (rightPanel) {
+                    rightPanel.style.display = 'none';
+                }
+            }
+
+            // 修改editor2_v2.html中的标签页点击事件
+            const tabs2 = document.querySelectorAll('.editor-tab');
+            tabs2.forEach(tab => {
+                tab.addEventListener('click', function() {
+                    const tabName = this.getAttribute('data-tab');
+                    
+                    // 如果点击的不是当前页面对应的标签，则跳转到对应页面
+                    if (tabName !== 'infringement') {
+                        if (tabName === 'media' || tabName === 'communication') {
+                            window.location.href = 'editor1.html';
+                        } else if (tabName === 'legal') {
+                            window.location.href = 'editor3.html';
+                        }
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
