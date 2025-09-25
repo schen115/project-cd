@@ -191,8 +191,8 @@
         .status-section { display: none; }
         .status-section.active { display: block; }
 
-        /* 操作列统一布局 */
-        .table-actions { display: inline-flex; align-items: center; gap: 12px; white-space: nowrap; }
+        /* 操作列统一布局
+        .table-actions { display: inline-flex; align-items: center; gap: 12px; white-space: nowrap; } */
 
         /* 状态链接色彩 */
         .action-link.status-pending { color: #999; text-decoration: underline; cursor: default; }
@@ -221,8 +221,8 @@
           font-size: 13px !important;
         }
 
-        /* 操作区横向排列 */
-        .table-actions{display:inline-flex;align-items:center;gap:12px;white-space:nowrap}
+        /* 操作区横向排列
+        .table-actions{display:inline-flex;align-items:center;gap:12px;white-space:nowrap} */
 
         /* 状态文本（非链接、不可点击） */
         .status-text{font-size:13px;cursor:default}
@@ -280,6 +280,147 @@
             <div class="task-filter">暂不处置</div>
         </div>
         
+        <!-- 全部任务 - 显示所有状态的链接 -->
+<div id="all-tasks-section" class="status-section">
+    <div class="links-section">
+        <table class="links-table">
+            <thead>
+                <tr>
+                    <th width="20%">链接标题</th>
+                    <th width="8%">来源</th>
+                    <th width="10%">发布日期</th>
+                    <th width="10%">发布者</th>
+                    <th width="12%">内容归属</th>
+                    <th width="10%">风险类别</th>
+                    <th width="12%">建议处理方式</th>
+                    <th width="10%">状态</th>
+                    <th width="8%">操作</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- 待处理状态 -->
+                <tr>
+                    <td class="link-title">某企业新品资料疑似外泄引发担忧</td>
+                    <td class="link-source">微博</td>
+                    <td class="link-date">2025-09-16</td>
+                    <td class="link-publisher">科技日报</td>
+                    <td><span class="tag-pill topic">信息泄露</span></td>
+                    <td><span class="tag-pill score medium-risk">中风险</span></td>
+                    <td><span class="tag-pill nature">媒体沟通</span></td>
+                    <td><span class="status-tag status-pending">待处理</span></td>
+                    <td><a class="action-link" data-action="to-processing">开始处置</a></td>
+                </tr>
+                
+                <!-- 处理中状态 -->
+                <tr>
+                    <td class="link-title">某企业售后服务态度差引发争议</td>
+                    <td class="link-source">小红书</td>
+                    <td class="link-date">2025-09-15</td>
+                    <td class="link-publisher">央视新闻</td>
+                    <td><span class="tag-pill topic">产品质量</span></td>
+                    <td><span class="tag-pill score high-risk">高风险</span></td>
+                    <td>
+                        <span class="tag-pill nature">媒体沟通</span>
+                        <span class="tag-pill nature">侵权</span>
+                        <span class="tag-pill nature">司法</span>
+                    </td>
+                    <td><span class="status-tag status-processing">处理中</span></td>
+                    <td>
+                            <a class="action-link" href="editor1.html">开始处置</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="link-title">消费者投诉某企业虚假宣传问题</td>
+                    <td class="link-source">知乎</td>
+                    <td class="link-date">2025-09-14</td>
+                    <td class="link-publisher">人民日报</td>
+                    <td><span class="tag-pill topic">虚假宣传</span></td>
+                    <td><span class="tag-pill score medium-risk">中风险</span></td>
+                    <td><span class="tag-pill nature">司法</span></td>
+                    <td><span class="status-tag status-processing">处理中</span></td>
+                    <td> <a class="action-link" href="editor1.html">开始处置</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="link-title">某企业售后服务态度差引发争议</td>
+                    <td class="link-source">微博</td>
+                    <td class="link-date">2025-09-13</td>
+                    <td class="link-publisher">新华社</td>
+                    <td><span class="tag-pill topic">服务态度</span></td>
+                    <td><span class="tag-pill score medium-risk">中风险</span></td>
+                    <td><span class="tag-pill nature">媒体沟通</span></td>
+                    <td><span class="status-tag status-processing">处理中</span></td>
+                    <td><a class="action-link" href="editor1.html">开始处置</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="link-title">某企业产品质量问题引发消费者不满</td>
+                    <td class="link-source">微信公众号</td>
+                    <td class="link-date">2025-09-12</td>
+                    <td class="link-publisher">财经网</td>
+                    <td><span class="tag-pill topic">信息泄露</span></td>
+                    <td><span class="tag-pill score medium-risk">中风险</span></td>
+                    <td><span class="tag-pill nature">司法</span></td>
+                    <td><span class="status-tag status-processing">处理中</span></td>
+                    <td><a class="action-link" href="editor1.html">开始处置</a>
+                    </td>
+                </tr>
+                
+                <!-- 已完成状态 -->
+                <tr>
+                    <td class="link-title">某企业平台删除不实内容并提醒账号</td>
+                    <td class="link-source">知乎</td>
+                    <td class="link-date">2025-09-10</td>
+                    <td class="link-publisher">人民日报</td>
+                    <td><span class="tag-pill topic">虚假宣传</span></td>
+                    <td><span class="tag-pill score medium-risk">中风险</span></td>
+                    <td><span class="tag-pill nature">司法</span></td>
+                    <td><span class="status-tag status-completed">已完成</span></td>
+                    <td><a class="action-link" data-action="to-processing">重新处置</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="link-title">某企业售后服务态度差引发争议</td>
+                    <td class="link-source">微博</td>
+                    <td class="link-date">2025-09-09</td>
+                    <td class="link-publisher">新华社</td>
+                    <td><span class="tag-pill topic">服务态度</span></td>
+                    <td><span class="tag-pill score medium-risk">中风险</span></td>
+                    <td><span class="tag-pill nature">媒体沟通</span></td>
+                    <td><span class="status-tag status-completed">已完成</span></td>
+                    <td> <a class="action-link" data-action="to-processing">重新处置</a>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="link-title">某企业侵权内容下架完毕</td>
+                    <td class="link-source">微信公众号</td>
+                    <td class="link-date">2025-09-09</td>
+                    <td class="link-publisher">财经网</td>
+                    <td><span class="tag-pill topic">信息泄露</span></td>
+                    <td><span class="tag-pill score medium-risk">中风险</span></td>
+                    <td><span class="tag-pill nature">司法</span></td>
+                    <td><span class="status-tag status-completed">已完成</span></td>
+                    <td> <a class="action-link" data-action="to-processing">重新处置</a>
+                    </td>
+                </tr>
+                
+                <!-- 暂不处置状态 -->
+                <tr>
+                    <td class="link-title">阶段性处理完成，记录归档</td>
+                    <td class="link-source">微博</td>
+                    <td class="link-date">2025-09-06</td>
+                    <td class="link-publisher">新华网</td>
+                    <td><span class="tag-pill topic">服务态度</span></td>
+                    <td><span class="tag-pill score low-risk">低风险</span></td>
+                    <td><span class="tag-pill nature">媒体沟通</span></td>
+                    <td><span class="status-tag status-archived">已归档</span></td>
+                    <td><a class="action-link" data-action="to-pending">取消归档</a></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
         <!-- 待处理 -->
         <div id="pending-section" class="status-section">
             <div class="links-section">
@@ -342,11 +483,7 @@
                                 <span class="tag-pill nature">侵权</span>
                                 <span class="tag-pill nature">司法</span>
                             </td>
-                            <td>
-                                <div class="table-actions">
-                                    <a class="action-link" href="editor1.html">查看</a>
-                                    <span class="status-text done">已完成</span>
-                                </div>
+                            <td><a class="action-link" href="editor1.html">处置</a>
                             </td>
                         </tr>
                         <tr>
@@ -357,11 +494,7 @@
                             <td><span class="tag-pill topic">虚假宣传</span></td>
                             <td><span class="tag-pill score medium-risk">中风险</span></td>
                             <td><span class="tag-pill nature">司法</span></td>
-                            <td>
-                                <div class="table-actions">
-                                    <a class="action-link" href="editor1.html">查看</a>
-                                    <span class="status-text pending">未完成</span>
-                                </div>
+                            <td><a class="action-link" href="editor1.html">处置</a>
                             </td>
                         </tr>
                         <tr>
@@ -372,11 +505,7 @@
                             <td><span class="tag-pill topic">服务态度</span></td>
                             <td><span class="tag-pill score medium-risk">中风险</span></td>
                             <td><span class="tag-pill nature">媒体沟通</span></td>
-                            <td>
-                                <div class="table-actions">
-                                    <a class="action-link" href="editor1.html">查看</a>
-                                    <span class="status-text pending">未完成</span>
-                                </div>
+                            <td><a class="action-link" href="editor1.html">处置</a>
                             </td>
                         </tr>
                         <tr>
@@ -387,11 +516,7 @@
                             <td><span class="tag-pill topic">信息泄露</span></td>
                             <td><span class="tag-pill score medium-risk">中风险</span></td>
                             <td><span class="tag-pill nature">司法</span></td>
-                            <td>
-                                <div class="table-actions">
-                                    <a class="action-link" href="editor1.html">查看</a>
-                                    <span class="status-text pending">未完成</span>
-                                </div>
+                            <td><a class="action-link" href="editor1.html">处置</a>
                             </td>
                         </tr>
                     </tbody>
@@ -537,7 +662,7 @@
         // 页签切换：显示对应表格
         (function bindTabs() {
             const map = {
-                '全部任务': null,
+                '全部任务': 'all-tasks-section',
                 '待处理': 'pending-section',
                 '处理中': 'processing-section',
                 '已完成': 'done-section',
@@ -551,10 +676,7 @@
                     sections.forEach(s => s.classList.remove('active'));
                     if (map[text]) {
                         document.getElementById(map[text]).classList.add('active');
-                    } else {
-                        // 全部任务：默认显示处理中
-                        document.getElementById('processing-section').classList.add('active');
-                    }
+                    } 
                 });
             });
         })();
